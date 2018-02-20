@@ -10,7 +10,14 @@ import UIKit
 
 class TimeTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var subView0: UILabel!
+    @IBOutlet weak var periodLabel: UILabel!
+    @IBOutlet weak var titleLabel1: UILabel!
+    @IBOutlet weak var titleLabel2: UILabel!
+    @IBOutlet weak var titleLabel3: UILabel!
+    @IBOutlet weak var titleLabel4: UILabel!
+    @IBOutlet weak var titleLabel5: UILabel!
+    @IBOutlet weak var titleLabel6: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
