@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9102787B20390A76002E8250 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9102787A20390A76002E8250 /* TabBarController.swift */; };
+		914BB5862039EA2E00E568FB /* LectureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BB5852039EA2E00E568FB /* LectureTableViewController.swift */; };
+		914BB5882039EA8F00E568FB /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BB5872039EA8F00E568FB /* Lecture.swift */; };
+		914BB5922039EF0C00E568FB /* UcampusIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BB5912039EF0C00E568FB /* UcampusIOSTests.swift */; };
+		914BB5B2203AADC000E568FB /* LectureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BB5B1203AADC000E568FB /* LectureTableViewCell.swift */; };
+		914BB5B6203AB13900E568FB /* Urls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BB5B5203AB13900E568FB /* Urls.swift */; };
+		914BB5DE203B3BD100E568FB /* SwiftSoup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914BB5D5203B3BA400E568FB /* SwiftSoup.framework */; };
+		914BB5DF203B3BD100E568FB /* SwiftSoup.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 914BB5D5203B3BA400E568FB /* SwiftSoup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		914BB5EC203B3C3A00E568FB /* AlamofireNetworkActivityIndicator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914BB5E9203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.framework */; };
+		914BB5ED203B3C3A00E568FB /* AlamofireNetworkActivityIndicator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 914BB5E9203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9162E06920379F21009A4C8C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 915797CA20361C1E0047F41E /* Alamofire.framework */; };
 		9162E06A20379F21009A4C8C /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 915797CA20361C1E0047F41E /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		916714112034D2AC006D7C41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916714102034D2AC006D7C41 /* AppDelegate.swift */; };
@@ -14,9 +24,81 @@
 		916714162034D2AC006D7C41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 916714142034D2AC006D7C41 /* Main.storyboard */; };
 		916714182034D2AC006D7C41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 916714172034D2AC006D7C41 /* Assets.xcassets */; };
 		9167141B2034D2AC006D7C41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 916714192034D2AC006D7C41 /* LaunchScreen.storyboard */; };
+		91F5ECB8203BB7DF00E9A2FC /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F5ECB7203BB7DF00E9A2FC /* TimeTableViewController.swift */; };
+		91F5ECBC203BE9A200E9A2FC /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F5ECBB203BE9A200E9A2FC /* TimeTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		914BB5942039EF0D00E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 916714052034D2AC006D7C41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9167140C2034D2AC006D7C41;
+			remoteInfo = UcampusIOS;
+		};
+		914BB5D4203B3BA400E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8CE418161DAA54A900240B42;
+			remoteInfo = "SwiftSoup-iOS";
+		};
+		914BB5D6203B3BA400E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BD3B5BA91FBED933001FDB3B;
+			remoteInfo = "SwiftSoup-macOS";
+		};
+		914BB5D8203B3BA400E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BD3B5BEC1FC063BD001FDB3B;
+			remoteInfo = "SwiftSoup-tvOS";
+		};
+		914BB5DA203B3BA400E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BD3B5C2F1FC06423001FDB3B;
+			remoteInfo = "SwiftSoup-watchOS";
+		};
+		914BB5DC203B3BA400E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8CE4181F1DAA54A900240B42;
+			remoteInfo = SwiftSoupTests;
+		};
+		914BB5E0203B3BD100E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8CE418151DAA54A900240B42;
+			remoteInfo = "SwiftSoup-iOS";
+		};
+		914BB5E8203B3C2F00E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CB928391C66E1A600CE5F08;
+			remoteInfo = AlamofireNetworkActivityIndicator;
+		};
+		914BB5EA203B3C2F00E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CB928431C66E1A700CE5F08;
+			remoteInfo = AlamofireNetworkActivityIndicatorTests;
+		};
+		914BB5EE203B3C3A00E568FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CB928381C66E1A600CE5F08;
+			remoteInfo = AlamofireNetworkActivityIndicator;
+		};
 		915797C920361C1E0047F41E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 915797BE20361C1E0047F41E /* Alamofire.xcodeproj */;
@@ -83,6 +165,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9162E06A20379F21009A4C8C /* Alamofire.framework in Embed Frameworks */,
+				914BB5DF203B3BD100E568FB /* SwiftSoup.framework in Embed Frameworks */,
+				914BB5ED203B3C3A00E568FB /* AlamofireNetworkActivityIndicator.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,6 +174,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9102787A20390A76002E8250 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		914BB5852039EA2E00E568FB /* LectureTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureTableViewController.swift; sourceTree = "<group>"; };
+		914BB5872039EA8F00E568FB /* Lecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lecture.swift; sourceTree = "<group>"; };
+		914BB58F2039EF0C00E568FB /* UcampusIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UcampusIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		914BB5912039EF0C00E568FB /* UcampusIOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UcampusIOSTests.swift; sourceTree = "<group>"; };
+		914BB5932039EF0D00E568FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		914BB5B1203AADC000E568FB /* LectureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureTableViewCell.swift; sourceTree = "<group>"; };
+		914BB5B5203AB13900E568FB /* Urls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Urls.swift; sourceTree = "<group>"; };
+		914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftSoup.xcodeproj; path = "../../Downloads/SwiftSoup-master 2/SwiftSoup.xcodeproj"; sourceTree = "<group>"; };
+		914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AlamofireNetworkActivityIndicator.xcodeproj; path = AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.xcodeproj; sourceTree = "<group>"; };
 		915797BE20361C1E0047F41E /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		9167140D2034D2AC006D7C41 /* UcampusIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UcampusIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		916714102034D2AC006D7C41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,20 +192,79 @@
 		916714172034D2AC006D7C41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9167141A2034D2AC006D7C41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9167141C2034D2AC006D7C41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91F5ECB7203BB7DF00E9A2FC /* TimeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
+		91F5ECBB203BE9A200E9A2FC /* TimeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		914BB58C2039EF0C00E568FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9167140A2034D2AC006D7C41 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9162E06920379F21009A4C8C /* Alamofire.framework in Frameworks */,
+				914BB5DE203B3BD100E568FB /* SwiftSoup.framework in Frameworks */,
+				914BB5EC203B3C3A00E568FB /* AlamofireNetworkActivityIndicator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		914BB5902039EF0C00E568FB /* UcampusIOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				914BB5912039EF0C00E568FB /* UcampusIOSTests.swift */,
+				914BB5932039EF0D00E568FB /* Info.plist */,
+			);
+			path = UcampusIOSTests;
+			sourceTree = "<group>";
+		};
+		914BB5B0203AAD3100E568FB /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				916714122034D2AC006D7C41 /* ViewController.swift */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
+		914BB5B4203AAFBD00E568FB /* MainTableView */ = {
+			isa = PBXGroup;
+			children = (
+				914BB5B1203AADC000E568FB /* LectureTableViewCell.swift */,
+				914BB5852039EA2E00E568FB /* LectureTableViewController.swift */,
+				914BB5872039EA8F00E568FB /* Lecture.swift */,
+			);
+			path = MainTableView;
+			sourceTree = "<group>";
+		};
+		914BB5CD203B3BA400E568FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				914BB5D5203B3BA400E568FB /* SwiftSoup.framework */,
+				914BB5D7203B3BA400E568FB /* SwiftSoup.framework */,
+				914BB5D9203B3BA400E568FB /* SwiftSoup.framework */,
+				914BB5DB203B3BA400E568FB /* SwiftSoup.framework */,
+				914BB5DD203B3BA400E568FB /* SwiftSoupTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		914BB5E3203B3C2F00E568FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				914BB5E9203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.framework */,
+				914BB5EB203B3C2F00E568FB /* AlamofireNetworkActivityIndicatorTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		915797BF20361C1E0047F41E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +283,9 @@
 			isa = PBXGroup;
 			children = (
 				9167140F2034D2AC006D7C41 /* UcampusIOS */,
+				914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */,
+				914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */,
+				914BB5902039EF0C00E568FB /* UcampusIOSTests */,
 				9167140E2034D2AC006D7C41 /* Products */,
 				915797BE20361C1E0047F41E /* Alamofire.xcodeproj */,
 			);
@@ -139,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				9167140D2034D2AC006D7C41 /* UcampusIOS.app */,
+				914BB58F2039EF0C00E568FB /* UcampusIOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,19 +303,50 @@
 		9167140F2034D2AC006D7C41 /* UcampusIOS */ = {
 			isa = PBXGroup;
 			children = (
+				91F5ECA7203B9EC900E9A2FC /* TimeTableView */,
+				914BB5B4203AAFBD00E568FB /* MainTableView */,
+				914BB5B0203AAD3100E568FB /* LoginView */,
 				916714102034D2AC006D7C41 /* AppDelegate.swift */,
-				916714122034D2AC006D7C41 /* ViewController.swift */,
+				9102787A20390A76002E8250 /* TabBarController.swift */,
 				916714142034D2AC006D7C41 /* Main.storyboard */,
 				916714172034D2AC006D7C41 /* Assets.xcassets */,
 				916714192034D2AC006D7C41 /* LaunchScreen.storyboard */,
+				914BB5B5203AB13900E568FB /* Urls.swift */,
 				9167141C2034D2AC006D7C41 /* Info.plist */,
 			);
 			path = UcampusIOS;
 			sourceTree = "<group>";
 		};
+		91F5ECA7203B9EC900E9A2FC /* TimeTableView */ = {
+			isa = PBXGroup;
+			children = (
+				91F5ECB7203BB7DF00E9A2FC /* TimeTableViewController.swift */,
+				91F5ECBB203BE9A200E9A2FC /* TimeTableViewCell.swift */,
+			);
+			path = TimeTableView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		914BB58E2039EF0C00E568FB /* UcampusIOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 914BB5962039EF0D00E568FB /* Build configuration list for PBXNativeTarget "UcampusIOSTests" */;
+			buildPhases = (
+				914BB58B2039EF0C00E568FB /* Sources */,
+				914BB58C2039EF0C00E568FB /* Frameworks */,
+				914BB58D2039EF0C00E568FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				914BB5952039EF0D00E568FB /* PBXTargetDependency */,
+			);
+			name = UcampusIOSTests;
+			productName = UcampusIOSTests;
+			productReference = 914BB58F2039EF0C00E568FB /* UcampusIOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9167140C2034D2AC006D7C41 /* UcampusIOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9167141F2034D2AC006D7C41 /* Build configuration list for PBXNativeTarget "UcampusIOS" */;
@@ -172,6 +360,8 @@
 			);
 			dependencies = (
 				9162E06C20379F21009A4C8C /* PBXTargetDependency */,
+				914BB5E1203B3BD100E568FB /* PBXTargetDependency */,
+				914BB5EF203B3C3A00E568FB /* PBXTargetDependency */,
 			);
 			name = UcampusIOS;
 			productName = UcampusIOS;
@@ -188,6 +378,11 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "홍순우";
 				TargetAttributes = {
+					914BB58E2039EF0C00E568FB = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 9167140C2034D2AC006D7C41;
+					};
 					9167140C2034D2AC006D7C41 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -210,15 +405,73 @@
 					ProductGroup = 915797BF20361C1E0047F41E /* Products */;
 					ProjectRef = 915797BE20361C1E0047F41E /* Alamofire.xcodeproj */;
 				},
+				{
+					ProductGroup = 914BB5E3203B3C2F00E568FB /* Products */;
+					ProjectRef = 914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */;
+				},
+				{
+					ProductGroup = 914BB5CD203B3BA400E568FB /* Products */;
+					ProjectRef = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
 				9167140C2034D2AC006D7C41 /* UcampusIOS */,
+				914BB58E2039EF0C00E568FB /* UcampusIOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		914BB5D5203B3BA400E568FB /* SwiftSoup.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftSoup.framework;
+			remoteRef = 914BB5D4203B3BA400E568FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		914BB5D7203B3BA400E568FB /* SwiftSoup.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftSoup.framework;
+			remoteRef = 914BB5D6203B3BA400E568FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		914BB5D9203B3BA400E568FB /* SwiftSoup.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftSoup.framework;
+			remoteRef = 914BB5D8203B3BA400E568FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		914BB5DB203B3BA400E568FB /* SwiftSoup.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftSoup.framework;
+			remoteRef = 914BB5DA203B3BA400E568FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		914BB5DD203B3BA400E568FB /* SwiftSoupTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SwiftSoupTests.xctest;
+			remoteRef = 914BB5DC203B3BA400E568FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		914BB5E9203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AlamofireNetworkActivityIndicator.framework;
+			remoteRef = 914BB5E8203B3C2F00E568FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		914BB5EB203B3C2F00E568FB /* AlamofireNetworkActivityIndicatorTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AlamofireNetworkActivityIndicatorTests.xctest;
+			remoteRef = 914BB5EA203B3C2F00E568FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		915797CA20361C1E0047F41E /* Alamofire.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -271,6 +524,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		914BB58D2039EF0C00E568FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9167140B2034D2AC006D7C41 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -284,18 +544,48 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		914BB58B2039EF0C00E568FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				914BB5922039EF0C00E568FB /* UcampusIOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		916714092034D2AC006D7C41 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				914BB5882039EA8F00E568FB /* Lecture.swift in Sources */,
+				9102787B20390A76002E8250 /* TabBarController.swift in Sources */,
 				916714132034D2AC006D7C41 /* ViewController.swift in Sources */,
 				916714112034D2AC006D7C41 /* AppDelegate.swift in Sources */,
+				914BB5B6203AB13900E568FB /* Urls.swift in Sources */,
+				91F5ECBC203BE9A200E9A2FC /* TimeTableViewCell.swift in Sources */,
+				914BB5B2203AADC000E568FB /* LectureTableViewCell.swift in Sources */,
+				91F5ECB8203BB7DF00E9A2FC /* TimeTableViewController.swift in Sources */,
+				914BB5862039EA2E00E568FB /* LectureTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		914BB5952039EF0D00E568FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9167140C2034D2AC006D7C41 /* UcampusIOS */;
+			targetProxy = 914BB5942039EF0D00E568FB /* PBXContainerItemProxy */;
+		};
+		914BB5E1203B3BD100E568FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftSoup-iOS";
+			targetProxy = 914BB5E0203B3BD100E568FB /* PBXContainerItemProxy */;
+		};
+		914BB5EF203B3C3A00E568FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AlamofireNetworkActivityIndicator;
+			targetProxy = 914BB5EE203B3C3A00E568FB /* PBXContainerItemProxy */;
+		};
 		9162E06C20379F21009A4C8C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Alamofire iOS";
@@ -323,6 +613,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		914BB5972039EF0D00E568FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TZUVERMKKD;
+				INFOPLIST_FILE = UcampusIOSTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = soonoome.UcampusIOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UcampusIOS.app/UcampusIOS";
+			};
+			name = Debug;
+		};
+		914BB5982039EF0D00E568FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TZUVERMKKD;
+				INFOPLIST_FILE = UcampusIOSTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = soonoome.UcampusIOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UcampusIOS.app/UcampusIOS";
+			};
+			name = Release;
+		};
 		9167141D2034D2AC006D7C41 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -473,6 +795,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		914BB5962039EF0D00E568FB /* Build configuration list for PBXNativeTarget "UcampusIOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				914BB5972039EF0D00E568FB /* Debug */,
+				914BB5982039EF0D00E568FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		916714082034D2AC006D7C41 /* Build configuration list for PBXProject "UcampusIOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
