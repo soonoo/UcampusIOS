@@ -16,13 +16,13 @@ class LectureTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         Alamofire.request(Urls.sub_info.rawValue, method: .get, parameters: nil, encoding:  URLEncoding.queryString).responseJSON() { response in
             let html = String(data: response.data!, encoding: .utf8)!
             
             let doc = try? SwiftSoup.parse(html)
             let td = try? doc!.select("td[width='9']").first()!.parent()!.parent()!.children()
-            
+
             for el in td! {
                 let title = try? el.child(1).text()
                 let lecture = try? Lecture(title: title!, info: el.child(2).text(), code: "")

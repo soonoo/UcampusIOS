@@ -66,18 +66,15 @@ class ViewController: UIViewController {
         self.logoAnimatedDistance = -self.logoAnimatedDistance
         self.buttonAnimatedDistance = -self.buttonAnimatedDistance
         
+        self.logoTopConstraint.constant += self.logoAnimatedDistance
+        self.loginButtonBottomConstraint.constant -= self.buttonAnimatedDistance
+        
         UIView.animate(withDuration: 0.3, animations: {
-            self.logoTopConstraint.constant += self.logoAnimatedDistance
-            self.loginButtonBottomConstraint.constant -= self.buttonAnimatedDistance
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
     
     func animate() {
-        self.idTextField.isHidden = !self.idTextField.isHidden
-        self.pwTextField.isHidden = !self.pwTextField.isHidden
-        self.logoTextField.isHidden = !self.logoTextField.isHidden
-        
         toggleTextField()
         
         if self.isTextFieldVisible {
@@ -87,6 +84,10 @@ class ViewController: UIViewController {
             self.loginButton.setTitle("로그인", for: .normal)
             self.idTextField.becomeFirstResponder()
         }
+        
+        self.idTextField.isHidden = !self.idTextField.isHidden
+        self.pwTextField.isHidden = !self.pwTextField.isHidden
+        
         self.isTextFieldVisible = !self.isTextFieldVisible
     }
     

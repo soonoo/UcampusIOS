@@ -1,19 +1,16 @@
 //
-//  TimeTableViewCell.swift
+//  TableHeaderCell.swift
 //  UcampusIOS
 //
-//  Created by 홍순우 on 2018. 2. 20..
+//  Created by 홍순우 on 2018. 2. 21..
 //  Copyright © 2018년 홍순우. All rights reserved.
 //
 
 import UIKit
 
-class TimeTableViewCell: UITableViewCell {
+class TableHeaderCell: UITableViewCell {
 
-    @IBOutlet var descriptionLabels: [UILabel]!
-    @IBOutlet var titleLabels: [UILabel]!
-    @IBOutlet var cellViews: [UIView]!
-    @IBOutlet weak var periodLabel: UILabel!
+    @IBOutlet weak var saturdayLabel: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
