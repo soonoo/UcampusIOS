@@ -25,15 +25,14 @@ class TimeTableViewController: UITableViewController {
     
     func initColorList() {
         let rbgList = [
-            (20.0, 167.0, 224.0),
-            (243.0 ,175.0, 90.0),
-            (236.0 ,135.0, 145.0),
-            (178.0 ,212.0, 103.0),
-            (102.0 ,190.0, 178.0),
-            (184.0 ,157.0, 116.0),
-            (255.0 ,226.0, 190.0),
-            (236.0 ,231.0, 133.0),
-            (138.0 ,237.0, 217.0)
+            (170.0, 200.0, 246.0),
+            (255.0, 226.0, 190.0),
+            (211.0, 253.0, 151.0),
+            (184.0, 140.0, 200.0),
+            (244.0, 130.0, 140.0),
+            (243.0, 155.0, 109.0),
+            (255.0, 193.0, 47.0),
+            (125.0, 220.0, 160.0),
         ]
 
         for i in 0..<rbgList.count {
@@ -81,7 +80,7 @@ class TimeTableViewController: UITableViewController {
 
     func setTimeTableData(_ html: String) {
         let doc = try! SwiftSoup.parse(html)
-        
+
         let elements = try! doc.select("prnon").first()!.child(3).child(1).children()
         
         //
@@ -104,10 +103,6 @@ class TimeTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as! UIView
-        
-        statusBar.backgroundColor = getUIColor((255, 255, 255))
         
         initColorList()
         Alamofire.request(Urls.time_table.rawValue, method: .post, parameters: nil, encoding: URLEncoding.httpBody).response() { response in
@@ -134,19 +129,22 @@ class TimeTableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
+    // returns cell count
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.lectures.count
+        return self.lectures.count == 0 ? 0 : self.lectures.count + 1
     }
 
+    // returns cell height
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return indexPath.row == 0 ? CGFloat(25) : CGFloat(90)
     }
     
+    // returns cell view
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cellIdentifier = "TimeTableViewCell"
 
-        if indexPath.row == 0{
+        if indexPath.row == 0 {
             cellIdentifier = "TableHeaderCell"
             let dayCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TableHeaderCell
             if lectures[0].count == 5 {

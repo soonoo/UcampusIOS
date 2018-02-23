@@ -24,6 +24,9 @@
 		916714162034D2AC006D7C41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 916714142034D2AC006D7C41 /* Main.storyboard */; };
 		916714182034D2AC006D7C41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 916714172034D2AC006D7C41 /* Assets.xcassets */; };
 		9167141B2034D2AC006D7C41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 916714192034D2AC006D7C41 /* LaunchScreen.storyboard */; };
+		91803F7E203E653400E9B592 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91803F7D203E653400E9B592 /* ContainerViewController.swift */; };
+		91803F80203E92D000E9B592 /* PopupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91803F7F203E92D000E9B592 /* PopupTableViewCell.swift */; };
+		91803F82203E931E00E9B592 /* PopupTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91803F81203E931E00E9B592 /* PopupTableDelegate.swift */; };
 		91DF0068203D891D00620AB9 /* TableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DF0067203D891D00620AB9 /* TableHeaderCell.swift */; };
 		91F5ECB8203BB7DF00E9A2FC /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F5ECB7203BB7DF00E9A2FC /* TimeTableViewController.swift */; };
 		91F5ECBC203BE9A200E9A2FC /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F5ECBB203BE9A200E9A2FC /* TimeTableViewCell.swift */; };
@@ -193,6 +196,9 @@
 		916714172034D2AC006D7C41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9167141A2034D2AC006D7C41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9167141C2034D2AC006D7C41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91803F7D203E653400E9B592 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		91803F7F203E92D000E9B592 /* PopupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTableViewCell.swift; sourceTree = "<group>"; };
+		91803F81203E931E00E9B592 /* PopupTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTableDelegate.swift; sourceTree = "<group>"; };
 		91DF0067203D891D00620AB9 /* TableHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderCell.swift; sourceTree = "<group>"; };
 		91F5ECB7203BB7DF00E9A2FC /* TimeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
 		91F5ECBB203BE9A200E9A2FC /* TimeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
@@ -242,6 +248,9 @@
 				914BB5B1203AADC000E568FB /* LectureTableViewCell.swift */,
 				914BB5852039EA2E00E568FB /* LectureTableViewController.swift */,
 				914BB5872039EA8F00E568FB /* Lecture.swift */,
+				91803F7D203E653400E9B592 /* ContainerViewController.swift */,
+				91803F7F203E92D000E9B592 /* PopupTableViewCell.swift */,
+				91803F81203E931E00E9B592 /* PopupTableDelegate.swift */,
 			);
 			path = MainTableView;
 			sourceTree = "<group>";
@@ -562,13 +571,16 @@
 				914BB5882039EA8F00E568FB /* Lecture.swift in Sources */,
 				91DF0068203D891D00620AB9 /* TableHeaderCell.swift in Sources */,
 				9102787B20390A76002E8250 /* TabBarController.swift in Sources */,
+				91803F7E203E653400E9B592 /* ContainerViewController.swift in Sources */,
 				916714132034D2AC006D7C41 /* ViewController.swift in Sources */,
 				916714112034D2AC006D7C41 /* AppDelegate.swift in Sources */,
+				91803F80203E92D000E9B592 /* PopupTableViewCell.swift in Sources */,
 				914BB5B6203AB13900E568FB /* Urls.swift in Sources */,
 				91F5ECBC203BE9A200E9A2FC /* TimeTableViewCell.swift in Sources */,
 				914BB5B2203AADC000E568FB /* LectureTableViewCell.swift in Sources */,
 				91F5ECB8203BB7DF00E9A2FC /* TimeTableViewController.swift in Sources */,
 				914BB5862039EA2E00E568FB /* LectureTableViewController.swift in Sources */,
+				91803F82203E931E00E9B592 /* PopupTableDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
