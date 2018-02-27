@@ -10,16 +10,18 @@ import UIKit
 import Alamofire
 import SwiftSoup
 
-class TimeTableViewController: UITableViewController {
+class TimeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var timeTableView: UITableView!
+
     var lectures = [[Lecture?]]()
     var bgColorList = [UIColor]()
     var subColorMap: [String: UIColor] = [:]
     let dayList = ["월", "화", "수", "목", "금", "토"]
-    //let timeList = []
 
     typealias RGB = (Double, Double, Double)
 
-    func getUIColor(_ value: RGB) -> UIColor{
+    static func getUIColor(_ value: RGB) -> UIColor{
         return UIColor(red: CGFloat(value.0/255.0), green: CGFloat(value.1/255.0), blue: CGFloat(value.2/255.0), alpha: 1.0)
     }
     
@@ -36,9 +38,9 @@ class TimeTableViewController: UITableViewController {
         ]
 
         for i in 0..<rbgList.count {
-            bgColorList.append(getUIColor(rbgList[i]));
+            bgColorList.append(TimeTableViewController.getUIColor(rbgList[i]));
         }
-        subColorMap[""] = getUIColor((255, 255, 255))
+        subColorMap[""] = TimeTableViewController.getUIColor((255, 255, 255))
     }
     
     func removeFirstRowIfEmpty() {
@@ -104,9 +106,12 @@ class TimeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        timeTableView.delegate = self
+        timeTableView.dataSource = self
+        
         initColorList()
         Alamofire.request(Urls.time_table.rawValue, method: .post, parameters: nil, encoding: URLEncoding.httpBody).response() { response in
-            
+
             // response is euc-kr
             let html = NSString(data: response.data!, encoding:
                 CFStringConvertEncodingToNSStringEncoding(0x0422))! as String
@@ -115,7 +120,8 @@ class TimeTableViewController: UITableViewController {
             self.removeFirstRowIfEmpty()
             self.removeLastColIfEmpty()
             
-            self.tableView.reloadData()
+            self.timeTableView.reloadData()
+            self.indicatorView.isHidden = true
         }
     }
 
@@ -126,22 +132,22 @@ class TimeTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     // returns cell count
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.lectures.count == 0 ? 0 : self.lectures.count + 1
     }
 
     // returns cell height
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return indexPath.row == 0 ? CGFloat(25) : CGFloat(90)
     }
     
     // returns cell view
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cellIdentifier = "TimeTableViewCell"
 
         if indexPath.row == 0 {
@@ -157,7 +163,7 @@ class TimeTableViewController: UITableViewController {
         
         let row = self.lectures[indexPath.row - 1]
         
-        var bgColor = getUIColor((255.0, 255.0, 255.0))
+        var bgColor = TimeTableViewController.getUIColor((255.0, 255.0, 255.0))
 
         for i in 0..<self.lectures[0].count {
             var title = row[i]?.title ?? ""

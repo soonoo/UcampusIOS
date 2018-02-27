@@ -105,7 +105,10 @@ class ViewController: UIViewController {
             self.loginIndicator.isHidden = true
             
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let tabBarController = storyBoard.instantiateViewController(withIdentifier: "tabBarController") as! TabBarController
+            let tabBarController = UITabBarController()
+            tabBarController.hidesBottomBarWhenPushed = true
+            tabBarController.viewControllers = [ storyBoard.instantiateViewController(withIdentifier: "navigationController"), storyBoard.instantiateViewController(withIdentifier: "timeTableController")]
+            
             self.present(tabBarController, animated: true, completion: nil)
         }
     }

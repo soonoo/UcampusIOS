@@ -13,27 +13,33 @@ import SwiftSoup
 
 class LectureTableViewController: NSObject, UITableViewDataSource, UITableViewDelegate {
     var lectures = [Lecture]()
-    
+
     var opaqueView: UIView!
-    var parentView: UIView!
-    var tabBar: UITabBar?
     var popupTableView: UITableView!
+    var popupTableHeaderView: PopupTableHeaderView!
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     // triggered on cell click
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        opaqueView.isHidden = !opaqueView.isHidden
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            let currentRect = self.popupTableView.frame
-            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 200, width: currentRect.size.width, height: currentRect.size.height)
-        }, completion: { (finished: Bool) in
-            //self.tabBar!.isHidden = !self.tabBar!.isHidden
-        })
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        // prevent cell multitouch
+        tableView.isUserInteractionEnabled = false
+
+        self.opaqueView.isHidden = !self.opaqueView.isHidden
+ 
+        let currentRect = self.popupTableView.frame
+        popupTableHeaderView.headerTitle.text = lectures[indexPath.row].title
+        popupTableHeaderView.isHidden = false
+
+        UIView.animate(withDuration: 0.2, animations: {
+            self.opaqueView.alpha = 0.7
+            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 200, width: currentRect.size.width, height: currentRect.size.height)
+            self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 270, width: currentRect.size.width, height: 70)
+        })
     }
     
     // returns row number

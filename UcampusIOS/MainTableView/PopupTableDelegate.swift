@@ -10,6 +10,12 @@ import UIKit
 
 class PopupTableDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
     var list = ["공지사항", "강의 자료실", "강의 계획서", "과제 조회",]
+    var lectures = [Lecture]()
+    var navigationController: UINavigationController!
+
+    var opaqueView: UIView!
+    var popupTableHeaderView: UIView!
+    var mainTableView: UITableView!
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -18,6 +24,22 @@ class PopupTableDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
     // triggered on cell click
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        popupTableHeaderView.isHidden = true
+        mainTableView.isUserInteractionEnabled = true
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            let currentRect = tableView.frame
+            self.opaqueView.alpha = CGFloat(0.0)
+            tableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y + 200, width: currentRect.size.width, height: currentRect.size.height)
+            self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: UIScreen.main.bounds.height - 70, width: currentRect.size.width, height: 70)
+        }, completion: {(finshied: Bool) in
+            self.opaqueView.isHidden = !self.opaqueView.isHidden
+
+            let board = UIStoryboard(name: "Main", bundle: nil)
+            let vc = board.instantiateViewController(withIdentifier: "test")
+            self.navigationController.pushViewController(SubInfoContainerController(), animated: true)
+        })
     }
     
     // returns row number
@@ -31,7 +53,7 @@ class PopupTableDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! PopupTableViewCell
 
         cell.titleLabel.text = list[indexPath.row]
-        
+
         return cell
     }
     
