@@ -7,91 +7,94 @@
 //
 
 import UIKit
+import UIKit.UIGestureRecognizerSubclass
 
 class SubInfoContainerController: UIViewController {
     let board = UIStoryboard(name: "Main", bundle: nil)
     var vc: UIViewController!
     var vc2: UIViewController!
     var vc3: UIViewController!
-    var currentPosition: CGFloat!
-    var positions = [CGFloat]()
+    var currentPositions = [CGFloat]()
+    var nextPositions = [CGFloat]()
+    var yPosition: CGFloat!
+    var prevSender: UIView!
+    var prevVelocity: CGFloat!
 
-    var viewControllers = [UIViewController]()
-
-    var gestureRecognizer: UIPanGestureRecognizer!
-
-    @objc func pan(sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: sender.view!.superview!)
+    @objc func pan(sender: CustomPanGestureRecognizer) {
+        var xTranslation = sender.translation(in: sender.view!.superview!).x
         let state = sender.state
+        let velocity = sender.velocity(in: self.view).x
+        let width = sender.view!.frame.size.width
+        var duration = 0.23
+        
         if state == .began {
-            currentPosition = sender.view!.center.x
-        }
-        
-        if state == .began || state == .changed {
-            let yPosition = sender.view!.center.y
-            let viewWidth = sender.view!.frame.size.width
-
-            let xDelta = (vc.view.frame.origin.x >= 0 || vc3.view.frame.origin.x <= 0) ? translation.x * 0.4 : translation.x
+            duration = 0.23
+            vc.view.frame = vc.view.layer.presentation()!.frame
+            vc2.view.frame = vc2.view.layer.presentation()!.frame
+            vc3.view.frame = vc3.view.layer.presentation()!.frame
             
-            self.vc.view.center = CGPoint(x: self.vc.view.center.x + xDelta, y: yPosition)
-            self.vc2.view.center = CGPoint(x: self.vc.view.center.x + viewWidth, y: yPosition)
-            self.vc3.view.center = CGPoint(x: self.vc.view.center.x + viewWidth*2, y: yPosition)
-            sender.setTranslation(.zero, in: self.view)
-        }
-        
-        if sender.state == .ended {
-            print(vc.view.frame.origin.x)
-            print(translation.x)
+            vc.view.layer.removeAllAnimations()
+            vc2.view.layer.removeAllAnimations()
+            vc3.view.layer.removeAllAnimations()
             
-            let velocity = sender.velocity(in: self.view).x
-            let divider = velocity > 0 ? sender.view!.frame.width - sender.view!.frame.origin.x : sender.view!.frame.origin.x
-            let duration = abs(velocity) / divider
-            
-            if vc.view.frame.origin.x >= 0 || vc3.view.frame.origin.x <= 0 {
-                UIView.animate(withDuration: 0.33, animations: {
-                    let yPosition = sender.view!.center.y
-                    self.vc.view.center = CGPoint(x: self.positions[0], y: yPosition)
-                    self.vc2.view.center = CGPoint(x: self.positions[1], y: yPosition)
-                    self.vc3.view.center = CGPoint(x: self.positions[2], y: yPosition)
-                }, completion: { Bool in
-                    self.positions[0] = self.vc.view.center.x
-                    self.positions[1] = self.vc2.view.center.x
-                    self.positions[2] = self.vc3.view.center.x
-                })
-                return
+            vc.view.layoutIfNeeded()
+            vc2.view.layoutIfNeeded()
+            vc3.view.layoutIfNeeded()
+        } else if state == .changed {
+            if (velocity > 0 && vc.view.center.x > width/2) || (velocity < 0 && vc3.view.center.x < width/2) {
+                xTranslation *= 0.3
             }
 
-            if abs(velocity) > 300 {
-                UIView.animate(withDuration: 0.33, animations: {
-                    let yPosition = sender.view!.center.y
-                    let viewWidth = velocity > 0 ? sender.view!.frame.size.width : -sender.view!.frame.size.width
-                    self.vc.view.center = CGPoint(x: self.positions[0] + viewWidth, y: yPosition)
-                    self.vc2.view.center = CGPoint(x: self.positions[1] + viewWidth,    y: yPosition)
-                    self.vc3.view.center = CGPoint(x: self.positions[2] + viewWidth,  y: yPosition)
-                }, completion: { Bool in
-                    self.positions[0] = self.vc.view.center.x
-                    self.positions[1] = self.vc2.view.center.x
-                    self.positions[2] = self.vc3.view.center.x
-                })
+            vc.view.center = CGPoint(x: vc.view.center.x + xTranslation, y: yPosition)
+            vc2.view.center = CGPoint(x: vc2.view.center.x + xTranslation, y: yPosition)
+            vc3.view.center = CGPoint(x: vc3.view.center.x + xTranslation, y: yPosition)
+            sender.setTranslation(.zero, in: sender.view!.superview!)
+        } else if state == .ended {
+            var xDelta = velocity > 0 ? width : -width
+            
+            let isSideView = (sender.view! == vc.view && sender.view!.center.x >= width/2) || (sender.view! == vc3.view && sender.view!.center.x <= width/2)
+
+            if ((abs(velocity) > 200) || (sender.view!.center.x >= width) || (sender.view!.center.x <= 0)) && !isSideView {
+                if currentPositions[0] + xDelta > width/2 || currentPositions[2] + xDelta < width/2 {
+                    xDelta = 0
+                }
+                if (prevSender == sender.view!) && (velocity*prevVelocity > 0)  {
+                    duration *= 2
+                }
+                nextPositions[0] = currentPositions[0] + xDelta
+                nextPositions[1] = currentPositions[1] + xDelta
+                nextPositions[2] = currentPositions[2] + xDelta
+                UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction],
+                                animations: {
+                                    self.vc.view.center = CGPoint(x: self.nextPositions[0], y: self.yPosition)
+                                    self.vc2.view.center = CGPoint(x: self.nextPositions[1], y: self.yPosition)
+                                    self.vc3.view.center = CGPoint(x: self.nextPositions[2], y: self.yPosition)
+                                },
+                                completion: { (Bool) in
+                                    self.currentPositions = self.nextPositions
+                                }
+                )
             } else {
-                UIView.animate(withDuration: 0.33, animations: {
-                    let yPosition = sender.view!.center.y
-                    self.vc.view.center = CGPoint(x: self.positions[0], y: yPosition)
-                    self.vc2.view.center = CGPoint(x: self.positions[1], y: yPosition)
-                    self.vc3.view.center = CGPoint(x: self.positions[2], y: yPosition)
-                }, completion: { Bool in
-                    self.positions[0] = self.vc.view.center.x
-                    self.positions[1] = self.vc2.view.center.x
-                    self.positions[2] = self.vc3.view.center.x
-                })
+                UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction],
+                                    animations: {
+                                        self.vc.view.center = CGPoint(x: self.currentPositions[0], y: self.yPosition)
+                                        self.vc2.view.center = CGPoint(x: self.currentPositions[1], y: self.yPosition)
+                                        self.vc3.view.center = CGPoint(x: self.currentPositions[2], y: self.yPosition)
+                                    },
+                                    completion: nil
+                )
             }
+            prevSender = sender.view!
+            prevVelocity = velocity
         }
     }
 
-    func getRecognizer() -> UIPanGestureRecognizer {
-        return UIPanGestureRecognizer (target: self, action: #selector(pan))
+    func getRecognizer() -> CustomPanGestureRecognizer {
+        let recognizer = CustomPanGestureRecognizer (target: self, action: #selector(pan))
+        recognizer.cancelsTouchesInView = true
+        return recognizer
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -112,14 +115,20 @@ class SubInfoContainerController: UIViewController {
         let baseFrame = vc2.view.frame.size
         vc.view.frame = CGRect(x: -baseFrame.width, y: 0, width: baseFrame.width, height: baseFrame.height)
         vc3.view.frame = CGRect(x: baseFrame.width, y: 0, width: baseFrame.width, height: baseFrame.height)
+        yPosition = vc.view.center.y
+        
+//        vc.view.addGestureRecognizer(getTapHandler())
+//        vc2.view.addGestureRecognizer(getTapHandler())
+//        vc3.view.addGestureRecognizer(getTapHandler())
 
         vc.view.addGestureRecognizer(getRecognizer())
         vc2.view.addGestureRecognizer(getRecognizer())
         vc3.view.addGestureRecognizer(getRecognizer())
         
-        positions.append(vc.view.center.x)
-        positions.append(vc2.view.center.x)
-        positions.append(vc3.view.center.x)
+        currentPositions.append(vc.view.center.x)
+        currentPositions.append(vc2.view.center.x)
+        currentPositions.append(vc3.view.center.x)
+        nextPositions = [0, 0, 0]
 
         self.view.addSubview(vc.view)
         self.view.addSubview(vc2.view)
@@ -128,6 +137,13 @@ class SubInfoContainerController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+}
+
+class CustomPanGestureRecognizer: UIPanGestureRecognizer {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+        if (self.state == UIGestureRecognizerState.began) { return }
+        super.touchesBegan(touches, with: event)
+        self.state = UIGestureRecognizerState.began
     }
 }
