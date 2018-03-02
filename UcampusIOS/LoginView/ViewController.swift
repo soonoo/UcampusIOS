@@ -103,7 +103,7 @@ class ViewController: UIViewController {
     func getSessionCookie() {
         Alamofire.request(Urls.session.rawValue, method: .get, parameters: nil, encoding: URLEncoding.queryString).response() { response in
             self.loginIndicator.isHidden = true
-            
+
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
             let tabBarController = UITabBarController()
             tabBarController.hidesBottomBarWhenPushed = true

@@ -29,6 +29,8 @@
 		91A59983204142BC00EA963E /* PopupTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A59982204142BC00EA963E /* PopupTableHeaderView.swift */; };
 		91DF0068203D891D00620AB9 /* TableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DF0067203D891D00620AB9 /* TableHeaderCell.swift */; };
 		91E01B1F20451BF600CD10CC /* SubInfoContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E01B1E20451BF600CD10CC /* SubInfoContainerController.swift */; };
+		91EB63002048165100D284FE /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EB62FF2048165100D284FE /* NoticeViewController.swift */; };
+		91EB63022048169A00D284FE /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EB63012048169A00D284FE /* NoticeTableViewCell.swift */; };
 		91F5ECB8203BB7DF00E9A2FC /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F5ECB7203BB7DF00E9A2FC /* TimeTableViewController.swift */; };
 		91F5ECBC203BE9A200E9A2FC /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F5ECBB203BE9A200E9A2FC /* TimeTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -202,6 +204,8 @@
 		91A59982204142BC00EA963E /* PopupTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTableHeaderView.swift; sourceTree = "<group>"; };
 		91DF0067203D891D00620AB9 /* TableHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderCell.swift; sourceTree = "<group>"; };
 		91E01B1E20451BF600CD10CC /* SubInfoContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubInfoContainerController.swift; sourceTree = "<group>"; };
+		91EB62FF2048165100D284FE /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
+		91EB63012048169A00D284FE /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
 		91F5ECB7203BB7DF00E9A2FC /* TimeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
 		91F5ECBB203BE9A200E9A2FC /* TimeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -334,9 +338,19 @@
 		91E01B1D20451BAC00CD10CC /* SubInfoView */ = {
 			isa = PBXGroup;
 			children = (
+				91EB62FE2048163A00D284FE /* NoticeView */,
 				91E01B1E20451BF600CD10CC /* SubInfoContainerController.swift */,
 			);
 			path = SubInfoView;
+			sourceTree = "<group>";
+		};
+		91EB62FE2048163A00D284FE /* NoticeView */ = {
+			isa = PBXGroup;
+			children = (
+				91EB62FF2048165100D284FE /* NoticeViewController.swift */,
+				91EB63012048169A00D284FE /* NoticeTableViewCell.swift */,
+			);
+			path = NoticeView;
 			sourceTree = "<group>";
 		};
 		91F5ECA7203B9EC900E9A2FC /* TimeTableView */ = {
@@ -583,10 +597,12 @@
 				914BB5882039EA8F00E568FB /* Lecture.swift in Sources */,
 				91DF0068203D891D00620AB9 /* TableHeaderCell.swift in Sources */,
 				91803F7E203E653400E9B592 /* MainViewController.swift in Sources */,
+				91EB63002048165100D284FE /* NoticeViewController.swift in Sources */,
 				916714132034D2AC006D7C41 /* ViewController.swift in Sources */,
 				916714112034D2AC006D7C41 /* AppDelegate.swift in Sources */,
 				91803F80203E92D000E9B592 /* PopupTableViewCell.swift in Sources */,
 				914BB5B6203AB13900E568FB /* Urls.swift in Sources */,
+				91EB63022048169A00D284FE /* NoticeTableViewCell.swift in Sources */,
 				91F5ECBC203BE9A200E9A2FC /* TimeTableViewCell.swift in Sources */,
 				91A59983204142BC00EA963E /* PopupTableHeaderView.swift in Sources */,
 				914BB5B2203AADC000E568FB /* LectureTableViewCell.swift in Sources */,

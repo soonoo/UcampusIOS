@@ -36,7 +36,6 @@ class PopupTableDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
         }, completion: {(finshied: Bool) in
             self.opaqueView.isHidden = !self.opaqueView.isHidden
 
-            let board = UIStoryboard(name: "Main", bundle: nil)
             self.navigationController.pushViewController(SubInfoContainerController(), animated: true)
         })
     }

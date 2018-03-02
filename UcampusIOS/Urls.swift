@@ -9,8 +9,8 @@
 import Foundation
 
 enum Urls: String {
-    case login = "https://info.kw.ac.kr/webnote/login/login_proc.php"
+    case login = "http://info.kw.ac.kr/webnote/login/login_proc.php"
     case session = "http://info2.kw.ac.kr/servlet/controller.homepage.MainServlet?p_gate=univ&p_process=main&p_page=learning&p_kwLoginType=cookie&gubun_code=11"
     case sub_info = "http://info2.kw.ac.kr/servlet/controller.homepage.KwuMainServlet?p_process=openStu&p_grcode=N000003"
-    case time_table = "https://info.kw.ac.kr/webnote/schedule/schedule.php"
+    case time_table = "http://info.kw.ac.kr/webnote/schedule/schedule.php"
 }

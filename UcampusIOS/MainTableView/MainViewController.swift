@@ -75,7 +75,7 @@ class MainViewController: UIViewController {
 
         Alamofire.request(Urls.sub_info.rawValue, method: .get, parameters: nil, encoding:  URLEncoding.queryString).responseJSON() { response in
             let html = String(data: response.data!, encoding: .utf8)!
-            
+
             let doc = try? SwiftSoup.parse(html)
             let td = try? doc!.select("td[width='9']").first()!.parent()!.parent()!.children()
 
