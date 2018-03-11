@@ -28,6 +28,8 @@ class ViewController: UIViewController {
     var buttonAnimatedDistance: CGFloat = 0.0
     var logoAnimatedDistance: CGFloat = 0.0
     
+    var loginInProcess = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // make login button border radius
@@ -46,10 +48,10 @@ class ViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.bgImageLeadingConstraint.constant -= (self.bgImageView.image!.size.width - self.view.bounds.width)
-        UIView.animate(withDuration: 150, delay: 0, options: [.repeat, .autoreverse, .curveLinear], animations: {
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+       // self.bgImageLeadingConstraint.constant -= (self.bgImageView.image!.size.width - self.view.bounds.width)
+//        UIView.animate(withDuration: 150, delay: 0, options: [.repeat, .autoreverse, .curveLinear], animations: {
+//            self.view.layoutIfNeeded()
+//        }, completion: nil)
         
         self.buttonAnimatedDistance = self.loginButton.center.y - self.idTextField.bounds.height*2 - UIApplication.shared.statusBarFrame.height - loginButtonTopConstraint.constant - constraintBetweenTextFields.constant - self.loginButton.bounds.height/2 - 40
         self.logoAnimatedDistance = self.logoTextField.center.y + (self.logoTextField.bounds.height/2)
@@ -63,9 +65,10 @@ class ViewController: UIViewController {
     }
     
     func toggleTextField() {
-        self.logoAnimatedDistance = -self.logoAnimatedDistance
-        self.buttonAnimatedDistance = -self.buttonAnimatedDistance
-        
+        print("called")
+        self.logoAnimatedDistance *= -1
+        self.buttonAnimatedDistance *= -1
+
         self.logoTopConstraint.constant += self.logoAnimatedDistance
         self.loginButtonBottomConstraint.constant -= self.buttonAnimatedDistance
         
@@ -103,17 +106,17 @@ class ViewController: UIViewController {
     func getSessionCookie() {
         Alamofire.request(Urls.session.rawValue, method: .get, parameters: nil, encoding: URLEncoding.queryString).response() { response in
             self.loginIndicator.isHidden = true
-
-            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let tabBarController = UITabBarController()
-            tabBarController.hidesBottomBarWhenPushed = true
-            tabBarController.viewControllers = [ storyBoard.instantiateViewController(withIdentifier: "navigationController"), storyBoard.instantiateViewController(withIdentifier: "timeTableController")]
             
-            self.present(tabBarController, animated: true, completion: nil)
+            self.loginButton.setTitle("로그인", for: .normal)
+            self.loginInProcess = false
+            
+            self.dismiss(animated: true, completion: nil)
+            self.performSegue(withIdentifier: "login", sender: self)
         }
     }
     
     func login() {
+        loginInProcess = true
         let params: Parameters = [
             "login_type": "2",
             "check_svc": "",
@@ -121,18 +124,30 @@ class ViewController: UIViewController {
             "layout_opt": "",
             "gubun_code": "11",
             "p_language": "KOREAN",
-            "member_no": "2014722023",
-            "password": "c792b"
+            "member_no": idTextField.text!,
+            "password": pwTextField.text!
         ]
         
         Alamofire.request(Urls.login.rawValue, method: .post, parameters: params, encoding: URLEncoding.httpBody).response() { response in
+            if let headerFields = response.response?.allHeaderFields as? [String: String],
+                let URL = response.request?.url {
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
+                for cookie in cookies {
+                    if cookie.name == "member_no" && cookie.value == "deleted" {
+                        self.loginInProcess = false
+                        self.loginIndicator.isHidden = true
+                        self.loginButton.setTitle("로그인", for: .normal)
+                        return
+                    }
+                }
+            }
             self.getSessionCookie()
         }
     }
     
     // triggered on view touch
     @IBAction func hideKeyboard(_ sender: UIButton) {
-        if self.isTextFieldVisible {
+        if self.isTextFieldVisible && !loginInProcess {
             animate()
         }
     }
@@ -143,8 +158,11 @@ class ViewController: UIViewController {
             animate()
             return
         }
-        loginButton.setTitle("", for: .normal)
-        loginIndicator.isHidden = false
-        login()
+
+        if idTextField.text! != "" && pwTextField.text! != "" {
+            loginButton.setTitle("", for: .normal)
+            loginIndicator.isHidden = false
+            login()
+        }
     }
 }

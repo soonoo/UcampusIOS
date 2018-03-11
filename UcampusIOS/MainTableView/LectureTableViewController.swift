@@ -17,7 +17,8 @@ class LectureTableViewController: NSObject, UITableViewDataSource, UITableViewDe
     var opaqueView: UIView!
     var popupTableView: UITableView!
     var popupTableHeaderView: PopupTableHeaderView!
-    
+    var rowSelectionDelegate: MainTableSelectionNotifier!
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -25,7 +26,8 @@ class LectureTableViewController: NSObject, UITableViewDataSource, UITableViewDe
     // triggered on cell click
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        rowSelectionDelegate.notifyMainTableSelection(row: indexPath.row)
+
         // prevent cell multitouch
         tableView.isUserInteractionEnabled = false
 
@@ -37,8 +39,8 @@ class LectureTableViewController: NSObject, UITableViewDataSource, UITableViewDe
 
         UIView.animate(withDuration: 0.2, animations: {
             self.opaqueView.alpha = 0.7
-            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 200, width: currentRect.size.width, height: currentRect.size.height)
-            self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 270, width: currentRect.size.width, height: 70)
+            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 150, width: currentRect.size.width, height: currentRect.size.height)
+            self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 220, width: currentRect.size.width, height: 70)
         })
     }
     
@@ -53,8 +55,8 @@ class LectureTableViewController: NSObject, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! LectureTableViewCell
         let lecture = lectures[indexPath.row]
         cell.titleLabel.text = lecture.title
-        cell.descriptionLabel.text = lecture.lectureInfo
-        
+        cell.descriptionLabel.text = lecture.info
+
         return cell
     }
 }

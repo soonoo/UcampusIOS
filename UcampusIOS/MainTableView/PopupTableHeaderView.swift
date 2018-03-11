@@ -22,7 +22,7 @@ class PopupTableHeaderView: UIView {
         headerTitle.translatesAutoresizingMaskIntoConstraints = false
         headerTitle.textColor = .black
         
-        bottomBorder.backgroundColor = TimeTableViewController.getUIColor((160.0, 160.0, 160.0))
+        bottomBorder.backgroundColor = TimeTableViewController.getUIColor((160, 160, 160))
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
 
         self.addSubview(headerTitle)

@@ -19,22 +19,28 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
     var subColorMap: [String: UIColor] = [:]
     let dayList = ["월", "화", "수", "목", "금", "토"]
 
-    typealias RGB = (Double, Double, Double)
+    typealias RGB = (Int, Int, Int)
 
     static func getUIColor(_ value: RGB) -> UIColor{
-        return UIColor(red: CGFloat(value.0/255.0), green: CGFloat(value.1/255.0), blue: CGFloat(value.2/255.0), alpha: 1.0)
+        return UIColor(red: CGFloat(CGFloat(value.0)/255.0), green: CGFloat(CGFloat(value.1)/255.0), blue: CGFloat(CGFloat(value.2)/255.0), alpha: 1.0)
     }
     
     func initColorList() {
         let rbgList = [
-            (170.0, 200.0, 246.0),
-            (255.0, 226.0, 190.0),
-            (211.0, 253.0, 151.0),
-            (184.0, 140.0, 200.0),
-            (244.0, 130.0, 140.0),
-            (243.0, 155.0, 109.0),
-            (255.0, 193.0, 47.0),
-            (125.0, 220.0, 160.0),
+            (255,236,127),
+            (83,182,80),
+            (123,152,237),
+            (172,225,240),
+            (243,80,85),
+            (251,201,211),
+            (209,155,34),
+            (206,223,127),
+            (212,192,241),
+            (248,115,49),
+            (255,236,127),
+            (83,182,80),
+            (123,152,237),
+            (172,225,240),
         ]
 
         for i in 0..<rbgList.count {
@@ -75,29 +81,31 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func getDescriptionFromText(_ text: String) -> String {
         let subString = String(text[text.index(of: "(")!..<text.index(of: ")")!])
-        
+
         // remove opening parenthesis
         return String(subString.suffix(subString.count - 1))
     }
 
     func setTimeTableData(_ html: String) {
-        let doc = try! SwiftSoup.parse(html)
+        if let doc = try? SwiftSoup.parse(html).select("prnon"),
+            let elements = doc.first()?.child(3).child(1).children() {
 
-        let elements = try! doc.select("prnon").first()!.child(3).child(1).children()
-        
-        //
-        for i in 2..<elements.size() {
-            self.lectures.append([Lecture?]())
-            
-            let row = elements.get(i).children()
-            for j in 1...6 {
-                if let text = try? row.get(j).text(), text.count != 0 {
-                    let title = getTitleFromText(text)
-                    let info = getDescriptionFromText(text)
-                    
-                    self.lectures[i-2].append(Lecture(title: title, info: info, code: ""))
-                } else {
-                    self.lectures[i-2].append(nil)
+            // time table starts at index '2'
+            for i in 2..<elements.size() {
+                self.lectures.append([Lecture?]())
+                
+                let row = elements.get(i).children()
+                
+                // monday(1) to saturday(6), (0) is for period
+                for j in 1...6 {
+                    if let text = try? row.get(j).text(), text.count != 0 {
+                        let title = getTitleFromText(text)
+                        let info = getDescriptionFromText(text)
+                        
+                        self.lectures[i-2].append(Lecture(title: title, info: info, code: ""))
+                    } else {
+                        self.lectures[i-2].append(nil)
+                    }
                 }
             }
         }
@@ -115,11 +123,11 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
             // response is euc-kr
             let html = NSString(data: response.data!, encoding:
                 CFStringConvertEncodingToNSStringEncoding(0x0422))! as String
-            
+
             self.setTimeTableData(html)
             self.removeFirstRowIfEmpty()
             self.removeLastColIfEmpty()
-            
+
             self.timeTableView.reloadData()
             self.indicatorView.isHidden = true
         }
@@ -163,11 +171,11 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let row = self.lectures[indexPath.row - 1]
         
-        var bgColor = TimeTableViewController.getUIColor((255.0, 255.0, 255.0))
+        var bgColor = TimeTableViewController.getUIColor((255, 255, 255))
 
         for i in 0..<self.lectures[0].count {
             var title = row[i]?.title ?? ""
-            var info = row[i]?.lectureInfo ?? ""
+            var info = row[i]?.info ?? ""
 
             if subColorMap[title] == nil {
                 subColorMap[title] = bgColorList.removeLast()
@@ -184,6 +192,7 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             
             dayCell.titleLabels[i].text = title
+            dayCell.titleLabels[i].textColor = UIColor(red: CGFloat(0.25), green: CGFloat(0.25), blue: CGFloat(0.25), alpha: CGFloat(1.0))
             dayCell.descriptionLabels[i].text = info
             dayCell.cellViews[i].backgroundColor = bgColor
         }

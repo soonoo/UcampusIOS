@@ -9,14 +9,12 @@
 import UIKit
 
 class PopupTableDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
-    var list = ["공지사항", "강의 자료실", "강의 계획서", "과제 조회",]
+    var list = ["공지사항", "강의 자료실", "강의 계획서",]
     var lectures = [Lecture]()
-    var navigationController: UINavigationController!
+    var controller: MainViewController!
+    var selectedRow: Int!
+    var rowSelectionDelegate: PopupTableSelectionNotifier!
 
-    var opaqueView: UIView!
-    var popupTableHeaderView: UIView!
-    var mainTableView: UITableView!
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -24,19 +22,32 @@ class PopupTableDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
     // triggered on cell click
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        popupTableHeaderView.isHidden = true
-        mainTableView.isUserInteractionEnabled = true
-        
+        selectedRow = indexPath.row
+        controller.popupTableHeaderView.isHidden = true
+        controller.mainTableView.isUserInteractionEnabled = true
+        rowSelectionDelegate.notifyPopupTableSelection(row: indexPath.row)
+
         UIView.animate(withDuration: 0.2, animations: {
             let currentRect = tableView.frame
-            self.opaqueView.alpha = CGFloat(0.0)
-            tableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y + 200, width: currentRect.size.width, height: currentRect.size.height)
-            self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: UIScreen.main.bounds.height - 70, width: currentRect.size.width, height: 70)
+            self.controller.opaqueView.alpha = CGFloat(0.0)
+            tableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y + 150, width: currentRect.size.width, height: currentRect.size.height)
+            self.controller.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: UIScreen.main.bounds.height - 70, width: currentRect.size.width, height: 70)
         }, completion: {(finshied: Bool) in
-            self.opaqueView.isHidden = !self.opaqueView.isHidden
-
-            self.navigationController.pushViewController(SubInfoContainerController(), animated: true)
+//            self.controller.opaqueView.isHidden = !self.controller.opaqueView.isHidden
+//            self.controller.performSegue(withIdentifier: "showDetailSubInfo", sender: self.controller)
+            
+            self.controller.opaqueView.isHidden = !self.controller.opaqueView.isHidden
+            
+            switch indexPath.row {
+            case 0:
+                self.controller.performSegue(withIdentifier: "showDetailSubInfo", sender: self.controller)
+            case 1:
+                self.controller.performSegue(withIdentifier: "showDetailSubInfo", sender: self.controller)
+            case 2:
+                self.controller.performSegue(withIdentifier: "showSyllabusView", sender: self.controller)
+            default:
+                return
+            }
         })
     }
     

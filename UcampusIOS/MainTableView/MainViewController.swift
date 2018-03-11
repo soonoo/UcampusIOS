@@ -10,7 +10,8 @@ import UIKit
 import Alamofire
 import SwiftSoup
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTableSelectionNotifier {
+    
     @IBOutlet weak var mainTableTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var indicatorView: UIActivityIndicatorView!
     @IBOutlet weak var mainTableView: UITableView!
@@ -19,6 +20,9 @@ class MainViewController: UIViewController {
     var popupTableView: UITableView!
     var opaqueView: UIView!
     var popupTableHeaderView: PopupTableHeaderView!
+    
+    var currentSubIndex: Int!
+    var currentPopupIndex: Int!
 
     let mainDelegate = LectureTableViewController()
     let popupDelegate = PopupTableDelegate()
@@ -30,24 +34,33 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: 0.2, animations: {
             let currentRect = self.popupTableView.frame
             self.opaqueView.alpha = CGFloat(0.0)
-            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y + 200, width: currentRect.size.width, height: currentRect.size.height)
+            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y + 150, width: currentRect.size.width, height: currentRect.size.height)
             self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: UIScreen.main.bounds.height - 70, width: currentRect.size.width, height: 70)
         }, completion: {(finshied: Bool) in
             self.opaqueView.isHidden = !self.opaqueView.isHidden
         })
+    }
+    
+    func notifyMainTableSelection(row index: Int) {
+        currentSubIndex = index
+    }
+    
+    func notifyPopupTableSelection(row index: Int) {
+        currentPopupIndex = index
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mainTableView.isExclusiveTouch = true
         mainTableView.isMultipleTouchEnabled = false
-        
+        mainDelegate.rowSelectionDelegate = self
+
         // init popup table header view
         popupTableHeaderView = PopupTableHeaderView(frame: CGRect(x: CGFloat(0), y: UIScreen.main.bounds.height - 70, width: CGFloat(view.frame.width), height: CGFloat(70)))
         popupTableHeaderView.isHidden = true
 
         // init popup table view
-        let popupTableHeight = 200
+        let popupTableHeight = 150
         popupTableView = UITableView(frame: CGRect(x: CGFloat(0), y: UIScreen.main.bounds.height, width: CGFloat(view.frame.width), height: CGFloat(popupTableHeight)))
         popupTableView.dataSource = popupDelegate
         popupTableView.register(PopupTableViewCell.self, forCellReuseIdentifier: "popupCell")
@@ -59,43 +72,48 @@ class MainViewController: UIViewController {
         opaqueView.isHidden = true
         opaqueView.alpha = CGFloat(0.0)
 
-        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector(checkAction))
         opaqueView.addGestureRecognizer(gesture)
 
-        popupDelegate.mainTableView = mainTableView
-        popupDelegate.popupTableHeaderView = popupTableHeaderView
-        popupDelegate.opaqueView = opaqueView
-        popupDelegate.navigationController = navigationController!
+        popupDelegate.controller = self
+        popupDelegate.rowSelectionDelegate = self
         popupTableView.delegate = popupDelegate
-        
+
         // add popup table and opaque view
         tabBarController!.view.addSubview(opaqueView)
         tabBarController!.view.addSubview(popupTableView)
         tabBarController!.view.addSubview(popupTableHeaderView)
 
         Alamofire.request(Urls.sub_info.rawValue, method: .get, parameters: nil, encoding:  URLEncoding.queryString).responseJSON() { response in
-            let html = String(data: response.data!, encoding: .utf8)!
+            
+            if let html = String(data: response.data!, encoding: .utf8),
+                let doc = try? SwiftSoup.parse(html),
+                let tag = try? doc.select("td[width='9']"),
+                let td = tag.first()?.parent()?.parent()?.children() {
+                
+                for el in td {
+                    let title = try? el.child(1).text()
+                    let info = try? el.child(2).text()
+                    let code = try? el.child(3).child(0).attr("href").substr(from: 24, to: 39)
+                    
+                    let lecture = Lecture(title: title!, info: info!, code: code!)
+                    self.lectures.append(lecture)
+                }
 
-            let doc = try? SwiftSoup.parse(html)
-            let td = try? doc!.select("td[width='9']").first()!.parent()!.parent()!.children()
-
-            for el in td! {
-                let title = try? el.child(1).text()
-                let lecture = try? Lecture(title: title!, info: el.child(2).text(), code: "")
-                self.lectures.append(lecture!)
+                // init main table view
+                self.mainTableView.dataSource = self.mainDelegate
+                self.mainTableView.delegate = self.mainDelegate
+                
+                self.mainDelegate.lectures += self.lectures
+                self.mainDelegate.popupTableHeaderView = self.popupTableHeaderView
+                self.mainDelegate.opaqueView = self.opaqueView
+                self.mainDelegate.popupTableView = self.popupTableView
+                self.mainTableView.reloadData()
+                
+                self.indicatorView.isHidden = true
+            } else {
+                self.dismiss(animated: true, completion: nil)
             }
-            
-            // init main table view
-            self.mainTableView.dataSource = self.mainDelegate
-            self.mainTableView.delegate = self.mainDelegate
-
-            self.mainDelegate.lectures += self.lectures
-            self.mainDelegate.popupTableHeaderView = self.popupTableHeaderView
-            self.mainDelegate.opaqueView = self.opaqueView
-            self.mainDelegate.popupTableView = self.popupTableView
-            self.mainTableView.reloadData()
-            
-            self.indicatorView.isHidden = true
         }
     }
     
@@ -107,4 +125,21 @@ class MainViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? SyllabusViewController {
+            destination.lecture = lectures[currentSubIndex]
+        } else if let destination = segue.destination as? SubInfoContainerController {
+            destination.lecture = lectures[currentSubIndex]
+            destination.tabPosition = currentPopupIndex
+        }
+    }
+}
+
+protocol MainTableSelectionNotifier {
+    func notifyMainTableSelection(row index: Int)
+}
+
+protocol PopupTableSelectionNotifier {
+    func notifyPopupTableSelection(row index: Int)
 }

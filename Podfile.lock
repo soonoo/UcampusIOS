@@ -1,0 +1,19 @@
+PODS:
+  - Alamofire (4.7.0)
+  - AlamofireNetworkActivityIndicator (2.2.0):
+    - Alamofire (~> 4.5)
+  - SwiftSoup (1.6.2)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.7)
+  - AlamofireNetworkActivityIndicator (~> 2.2)
+  - SwiftSoup
+
+SPEC CHECKSUMS:
+  Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
+  AlamofireNetworkActivityIndicator: 81e1630e7cfed22a4e4e82a174c59e651dc4f8ca
+  SwiftSoup: 390f651d9d3937c538e41219a98e5d6658a4405f
+
+PODFILE CHECKSUM: 103b0aa1227ebbcde09c2de0cc069a2e1197d72f
+
+COCOAPODS: 1.4.0

@@ -10,120 +10,143 @@ import UIKit
 import UIKit.UIGestureRecognizerSubclass
 
 class SubInfoContainerController: UIViewController, UIGestureRecognizerDelegate {
+    @IBOutlet weak var topTabIndicatorView: UIStackView!
     let board = UIStoryboard(name: "Main", bundle: nil)
-    var vc: NoticeViewController!
-    var vc2: NoticeViewController!
-    var vc3: NoticeViewController!
-    var controllers = [UIView]()
+
+    var tabPosition: Int!
+    var navBarShadowImage: UIImage!
+    var offTabColor: UIColor!
+    var lecture: Lecture!
+    var controllers = [UIViewController & SubViewControllerWithTable]()
     var currentPositions = [CGFloat]()
     var nextPositions = [CGFloat]()
     var yPosition: CGFloat!
     var prevSender: UIView!
     var prevVelocity: CGFloat!
-    var isSuspended = false
-    var g1, g2, g3: CustomPanGestureRecognizer!
-    var rcs = [UIGestureRecognizer]()
-    var rcs2 = [UIGestureRecognizer]()
-    var rcs3 = [UIGestureRecognizer]()
+    var gestureRecognizer: CustomPanGestureRecognizer!
+    var rcs = [[UIGestureRecognizer]]()
     var isScrolling = false
     var isViewChanging = false
-    
+    var timeAdded = false
+    var isSuspended = false
+
     @objc func pan(sender: CustomPanGestureRecognizer) {
         var translation = sender.translation(in: sender.view!.superview!)
         let state = sender.state
         let velocity = sender.velocity(in: self.view)
-        let width = sender.view!.frame.size.width
-        var duration = 0.18
-        isSuspended = false
-
+        let width = sender.view!.frame.width
+        var duration = 0.25
         if isScrolling {
             return
         }
 
-        print(velocity)
         if state == .began {
-            print("began")
-            duration = 0.18
-            isSuspended = true
-            setVisibile()
-            vc.view.frame = vc.view.layer.presentation()!.frame
-            vc2.view.frame = vc2.view.layer.presentation()!.frame
-            vc3.view.frame = vc3.view.layer.presentation()!.frame
-
-            vc.view.layer.removeAllAnimations()
-            vc2.view.layer.removeAllAnimations()
-            vc3.view.layer.removeAllAnimations()
-
-            vc.view.layoutIfNeeded()
-            vc2.view.layoutIfNeeded()
-            vc3.view.layoutIfNeeded()
+            if isViewChanging {
+                isSuspended = true
+                for case let vc as UIViewController in controllers {
+                    vc.view.frame = vc.view.layer.presentation()!.frame
+                    vc.view.layer.removeAllAnimations()
+                    vc.view.layoutIfNeeded()
+                }
+            }
         } else if state == .changed {
-            print("changed")
-
             if abs(velocity.x) < abs(velocity.y) && !isViewChanging {
+                
+                // prevent vertical gesture when table is empty
+                for vc in controllers {
+                    if vc.view.frame.origin.x == 0 && vc.mainTableView.numberOfRows(inSection: 0) == 0 {
+                        return
+                    }
+                }
+
                 view.gestureRecognizers!.removeAll()
                 isScrolling = true
+                isViewChanging = false
                 return
             } else {
+                setVisible()
                 isScrolling = false
                 isViewChanging = true
-                vc2.noticeTableView.gestureRecognizers = []
-                vc.noticeTableView.gestureRecognizers = []
-                vc3.noticeTableView.gestureRecognizers = []
+
+                for vc in controllers {
+                    vc.mainTableView.isUserInteractionEnabled = false
+                    vc.mainTableView.gestureRecognizers = []
+                }
             }
 
-            if (velocity.x > 0 && vc.view.center.x > width/2) || (velocity.x < 0 && vc3.view.center.x < width/2) {
-                translation.x *= 0.3
+            if (velocity.x > 0 && controllers[0].view.center.x >= width/2) || (velocity.x < 0 && controllers[controllers.count - 1].view.center.x <= width/2) {
+                translation.x *= 0.2
             }
 
-            vc.view.center = CGPoint(x: vc.view.center.x + translation.x, y: yPosition)
-            vc2.view.center = CGPoint(x: vc2.view.center.x + translation.x, y: yPosition)
-            vc3.view.center = CGPoint(x: vc3.view.center.x + translation.x, y: yPosition)
+            for controller in controllers {
+                controller.view.center = CGPoint(x: controller.view.center.x + translation.x, y: yPosition)
+            }
             sender.setTranslation(.zero, in: sender.view!.superview!)
         } else if state == .ended {
-            print("ended")
             var xDelta = velocity.x > 0 ? width : -width
-            
-            let isSideView = (sender.view! == vc.view && sender.view!.center.x >= width/2) || (sender.view! == vc3.view && sender.view!.center.x <= width/2)
 
-            if ((abs(velocity.x) > 300) || (sender.view!.center.x >= width) || (sender.view!.center.x <= 0)) && !isSideView {
-                if currentPositions[0] + xDelta > width/2 || currentPositions[2] + xDelta < width/2 {
+            if (abs(velocity.x) > 300 || abs(controllers[0].view.center.x - currentPositions[0]) > width/2) {
+                if currentPositions[0] + xDelta > width/2 || currentPositions[currentPositions.count - 1] + xDelta < width/2 {
                     xDelta = 0
                 }
-                if (prevSender == sender.view!) && (velocity.x*prevVelocity > 0)  {
-                    duration *= 2
+
+                nextPositions = currentPositions.map{ $0 + xDelta }
+                if abs(controllers[0].view.center.x - nextPositions[0]) > width {
+                    duration *= 1.8
                 }
-                nextPositions[0] = currentPositions[0] + xDelta
-                nextPositions[1] = currentPositions[1] + xDelta
-                nextPositions[2] = currentPositions[2] + xDelta
                 UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction],
                                 animations: {
-                                    self.vc.view.center = CGPoint(x: self.nextPositions[0], y: self.yPosition)
-                                    self.vc2.view.center = CGPoint(x: self.nextPositions[1], y: self.yPosition)
-                                    self.vc3.view.center = CGPoint(x: self.nextPositions[2], y: self.yPosition)
+                                    for (index, vc) in self.controllers.enumerated() {
+                                        vc.view.center = CGPoint(x: self.nextPositions[index], y: self.yPosition)
+                                    }
                                 },
                                 completion: { (Bool) in
+                                    if !self.isSuspended {
+                                        self.setSubViewVisibility()
+                                        self.setLabelVisibility()
+                                    }
                                     self.currentPositions = self.nextPositions
-                                    self.isSuspended ? () : self.setVisibility()
-                                    self.isViewChanging = false
-                                    self.vc2.noticeTableView.gestureRecognizers = self.rcs
-                                    self.vc.noticeTableView.gestureRecognizers = self.rcs2
-                                    self.vc3.noticeTableView.gestureRecognizers = self.rcs3
+
+                                    for (index, vc) in self.controllers.enumerated() {
+                                        vc.mainTableView.gestureRecognizers = self.rcs[index]
+                                        vc.mainTableView.isUserInteractionEnabled = true
+                                    }
+                                    
+                                    for vc in self.controllers {
+                                        if vc.view.frame.origin.x == 0 {
+                                            self.isViewChanging = false
+                                            return
+                                        }
+                                    }
+                                    self.isSuspended = false
                                 }
                 )
             } else {
                 UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction],
                                 animations: {
-                                    self.vc.view.center = CGPoint(x: self.currentPositions[0], y: self.yPosition)
-                                    self.vc2.view.center = CGPoint(x: self.currentPositions[1], y: self.yPosition)
-                                    self.vc3.view.center = CGPoint(x: self.currentPositions[2], y: self.yPosition)
+                                    for (index, vc) in self.controllers.enumerated() {
+                                        vc.view.center = CGPoint(x: self.currentPositions[index], y: self.yPosition)
+                                    }
                                 },
                                 completion: { (Bool) in
-                                    self.isSuspended ? () : self.setVisibility()
-                                    self.isViewChanging = false
-                                    self.vc2.noticeTableView.gestureRecognizers = self.rcs
-                                    self.vc.noticeTableView.gestureRecognizers = self.rcs2
-                                    self.vc3.noticeTableView.gestureRecognizers = self.rcs3
+                                    if !self.isSuspended {
+                                        self.setSubViewVisibility()
+                                        self.setLabelVisibility()
+                                    }
+                                    
+                                    for (index, vc) in self.controllers.enumerated() {
+                                        vc.mainTableView.gestureRecognizers = self.rcs[index]
+                                        vc.mainTableView.isUserInteractionEnabled = true
+                                    }
+
+                                    for vc in self.controllers {
+                                        if vc.view.frame.origin.x == 0 {
+                                            self.isViewChanging = false
+                                            return
+                                        }
+                                    }
+
+                                    self.isSuspended = false
                                 }
                 )
             }
@@ -143,59 +166,73 @@ class SubInfoContainerController: UIViewController, UIGestureRecognizerDelegate 
         return true
     }
 
-    func setVisibility() {
-        for view in controllers {
-            view.isHidden = view.frame.origin.x == 0 ? false : true
+    func setSubViewVisibility() {
+        for controller in controllers {
+            controller.view.isHidden = controller.view.frame.origin.x == 0 ? false : true
         }
     }
     
-    func setVisibile() {
-        for view in controllers {
-            view.isHidden = false
+    func setVisible() {
+        for controller in controllers {
+            controller.view.isHidden = false
         }
     }
 
+    func setLabelVisibility() {
+        for (index, label) in topTabIndicatorView.subviews.enumerated() {
+            (label as! UILabel).textColor = controllers[index].view.frame.origin.x == 0 ? .black : offTabColor
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = lecture.title
 
         view.backgroundColor = .white
-
-        vc2 = board.instantiateViewController(withIdentifier: "noticeTableController") as! NoticeViewController
-        vc = board.instantiateViewController(withIdentifier: "noticeTableController") as! NoticeViewController
-        vc3 = board.instantiateViewController(withIdentifier: "noticeTableController") as! NoticeViewController
-        controllers = [vc.view, vc2.view, vc3.view]
-
-        self.addChildViewController(vc)
-        self.addChildViewController(vc2)
-        self.addChildViewController(vc3)
-        vc.didMove(toParentViewController: self)
-        vc2.didMove(toParentViewController: self)
-        vc3.didMove(toParentViewController: self)
-
-        let baseFrame = vc2.view.frame.size
-        vc.view.frame = CGRect(x: -baseFrame.width, y: 0, width: baseFrame.width, height: baseFrame.height)
-        vc3.view.frame = CGRect(x: baseFrame.width, y: 0, width: baseFrame.width, height: baseFrame.height)
-        yPosition = vc.view.center.y
-
-        g1 = getRecognizer()
-        view.addGestureRecognizer(g1)
-        
-        currentPositions.append(vc.view.center.x)
-        currentPositions.append(vc2.view.center.x)
-        currentPositions.append(vc3.view.center.x)
         nextPositions = [0, 0, 0]
-        vc2.noticeTableView.isExclusiveTouch = true
-        setVisibility()
-        self.view.addSubview(vc.view)
-        self.view.addSubview(vc2.view)
-        self.view.addSubview(vc3.view)
-        rcs = vc2.noticeTableView.gestureRecognizers!
-        rcs2 = vc.noticeTableView.gestureRecognizers!
-        rcs3 = vc3.noticeTableView.gestureRecognizers!
+
+        controllers.append(board.instantiateViewController(withIdentifier: "noticeTableController") as! NoticeViewController)
+        controllers.append(board.instantiateViewController(withIdentifier: "lectureReferenceViewController") as! LectureReferenceViewController)
+
+        gestureRecognizer = getRecognizer()
+        view.addGestureRecognizer(gestureRecognizer)
+        
+        var i = -tabPosition
+        for vc in controllers {
+            self.addChildViewController(vc)
+            vc.didMove(toParentViewController: self)
+            view.addSubview(vc.view)
+            vc.view.frame = CGRect(x: view.frame.width * CGFloat(i), y: topTabIndicatorView.frame.origin.y + topTabIndicatorView.frame.height, width: view.frame.width, height: view.frame.height - (topTabIndicatorView.frame.origin.y + topTabIndicatorView.frame.height))
+            currentPositions.append(vc.view.center.x)
+            rcs.append(vc.mainTableView.gestureRecognizers!)
+            i += 1
+        }
+        yPosition = controllers[0].view.center.y
+
+        setSubViewVisibility()
+        
+        // set tab text color
+        offTabColor = (topTabIndicatorView.subviews[tabPosition] as! UILabel).textColor
+        (topTabIndicatorView.subviews[tabPosition] as! UILabel).textColor = .black
+        topTabIndicatorView.subviews.map {
+            $0.backgroundColor = UIColor(red: (247/255), green: (247/255), blue: (247/255), alpha: 1)
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // remove navigation bar shadow
+        navBarShadowImage = navigationController!.navigationBar.shadowImage
+        navigationController!.navigationBar.shadowImage = UIImage()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController!.navigationBar.shadowImage = navBarShadowImage
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
 
@@ -205,4 +242,10 @@ class CustomPanGestureRecognizer: UIPanGestureRecognizer {
         super.touchesBegan(touches, with: event)
         self.state = UIGestureRecognizerState.began
     }
+}
+
+protocol SubViewControllerWithTable {
+    var container: SubInfoContainerController! { get set }
+    var pages: [String] { get set }
+    var mainTableView: UITableView! { get set }
 }
