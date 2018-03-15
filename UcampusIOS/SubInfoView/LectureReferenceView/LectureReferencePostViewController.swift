@@ -30,8 +30,8 @@ class LectureReferencePostViewController: UIViewController {
             
             let url = Urls.notice_download.rawValue + "p_savefile=\(serverName)&p_realfile=\(savedName)"
             Alamofire.download(url, to: destination).response { response in
-                self.documentController = UIDocumentInteractionController(url: URL(fileURLWithPath: response.destinationURL?.path ?? ""))
-                self.documentController.presentOptionsMenu(from: self.view.frame, in: self.view, animated: true)
+                //self.documentController = UIDocumentInteractionController(url: URL(fileURLWithPath: response.destinationURL?.path ?? ""))
+                //self.documentController.presentOptionsMenu(from: self.view.frame, in: self.view, animated: true)
                 
                 self.isDownloading = !self.isDownloading
             }

@@ -27,11 +27,6 @@ class LectureReferenceViewController: UIViewController, UITableViewDelegate, UIT
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print(scrollView.contentSize.height)
-        print(scrollView.frame.size.height)
-        print(scrollView.contentOffset.y)
-        print()
-
         if scrollView.contentOffset.y != 0 && (scrollView.contentSize.height - scrollView.frame.size.height < scrollView.contentOffset.y || scrollView.contentOffset.y < 0) {
             return
         }
@@ -79,9 +74,7 @@ class LectureReferenceViewController: UIViewController, UITableViewDelegate, UIT
         mainTableView.tableFooterView = UIView()
         
         var url = Urls.reference.rawValue + container.lecture.referenceQuery
-        print(url)
         Alamofire.request(url).response() { response in
-            print(response)
             if let data = response.data,
                 let html = String(data: data, encoding: .utf8),
                 let doc = try? SwiftSoup.parse(html),

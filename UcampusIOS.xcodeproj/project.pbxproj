@@ -86,20 +86,6 @@
 			remoteGlobalIDString = 8CE4181F1DAA54A900240B42;
 			remoteInfo = SwiftSoupTests;
 		};
-		914BB5E8203B3C2F00E568FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4CB928391C66E1A600CE5F08;
-			remoteInfo = AlamofireNetworkActivityIndicator;
-		};
-		914BB5EA203B3C2F00E568FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4CB928431C66E1A700CE5F08;
-			remoteInfo = AlamofireNetworkActivityIndicatorTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -122,7 +108,6 @@
 		914BB5B1203AADC000E568FB /* LectureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureTableViewCell.swift; sourceTree = "<group>"; };
 		914BB5B5203AB13900E568FB /* Urls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Urls.swift; sourceTree = "<group>"; };
 		914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftSoup.xcodeproj; path = "../../Downloads/SwiftSoup-master 2/SwiftSoup.xcodeproj"; sourceTree = "<group>"; };
-		914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AlamofireNetworkActivityIndicator.xcodeproj; path = AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.xcodeproj; sourceTree = "<group>"; };
 		9167140D2034D2AC006D7C41 /* UcampusIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UcampusIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		916714102034D2AC006D7C41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		916714122034D2AC006D7C41 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -213,20 +198,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		914BB5E3203B3C2F00E568FB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				914BB5E9203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.framework */,
-				914BB5EB203B3C2F00E568FB /* AlamofireNetworkActivityIndicatorTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		916714042034D2AC006D7C41 = {
 			isa = PBXGroup;
 			children = (
 				9167140F2034D2AC006D7C41 /* UcampusIOS */,
-				914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */,
 				914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */,
 				914BB5902039EF0C00E568FB /* UcampusIOSTests */,
 				9167140E2034D2AC006D7C41 /* Products */,
@@ -424,10 +399,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 914BB5E3203B3C2F00E568FB /* Products */;
-					ProjectRef = 914BB5E2203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.xcodeproj */;
-				},
-				{
 					ProductGroup = 914BB5CD203B3BA400E568FB /* Products */;
 					ProjectRef = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
 				},
@@ -474,20 +445,6 @@
 			fileType = wrapper.cfbundle;
 			path = SwiftSoupTests.xctest;
 			remoteRef = 914BB5DC203B3BA400E568FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		914BB5E9203B3C2F00E568FB /* AlamofireNetworkActivityIndicator.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AlamofireNetworkActivityIndicator.framework;
-			remoteRef = 914BB5E8203B3C2F00E568FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		914BB5EB203B3C2F00E568FB /* AlamofireNetworkActivityIndicatorTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AlamofireNetworkActivityIndicatorTests.xctest;
-			remoteRef = 914BB5EA203B3C2F00E568FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

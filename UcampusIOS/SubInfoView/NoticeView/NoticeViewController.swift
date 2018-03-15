@@ -72,7 +72,6 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         mainTableView.tableFooterView = UIView()
 
         let url = Urls.notice.rawValue + container.lecture.noticeQuery
-        print(url)
         Alamofire.request(url).response() { response in
             if let data = response.data,
                 let html = String(data: data, encoding: .utf8),
@@ -94,7 +93,6 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         let optDate = try? post.parent()?.parent()?.nextElementSibling()?.nextElementSibling()?.text(),
                         let date = optDate,
                         let title = try? post.text() {
-                        print(title)
                         self.postLinks.append(Notice(title: title, date: date, postCode: postCode))
                     }
                 }
