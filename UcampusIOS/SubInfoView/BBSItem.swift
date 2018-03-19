@@ -1,5 +1,5 @@
 //
-//  Notice.swift
+//  Reference.swift
 //  UcampusIOS
 //
 //  Created by 홍순우 on 2018. 3. 8..
@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct Notice {
+struct BBSItem {
     var title: String
     var date: String
     var postCode: String
-
+    
     init(title: String, date: String, postCode: String) {
         self.title = title
         self.date = date

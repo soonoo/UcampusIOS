@@ -17,7 +17,7 @@ class LectureTableViewController: NSObject, UITableViewDataSource, UITableViewDe
     var opaqueView: UIView!
     var popupTableView: UITableView!
     var popupTableHeaderView: PopupTableHeaderView!
-    var rowSelectionDelegate: MainTableSelectionNotifier!
+    var rowSelectionDelegate: MainTableRowSelectionNotifier!
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -39,8 +39,8 @@ class LectureTableViewController: NSObject, UITableViewDataSource, UITableViewDe
 
         UIView.animate(withDuration: 0.2, animations: {
             self.opaqueView.alpha = 0.7
-            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 150, width: currentRect.size.width, height: currentRect.size.height)
-            self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 220, width: currentRect.size.width, height: 70)
+            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 220, width: currentRect.size.width, height: currentRect.size.height)
+            self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y - 290, width: currentRect.size.width, height: 70)
         })
     }
     

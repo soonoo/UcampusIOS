@@ -11,11 +11,43 @@ import Alamofire
 import SwiftSoup
 
 class NoticePostViewController: UIViewController {
-    var scrollView: UIScrollView!
+    var documentController: UIDocumentInteractionController!
     var lectureCode: String!
+    var scrollView: UIScrollView!
+    var isDownloading = false
     
     @IBOutlet weak var failureLabel: UILabel!
-    
+
+    @objc func startDownload(sender: UITapGestureRecognizer) {
+        if isDownloading { return }
+        isDownloading = !isDownloading
+        let downloadButton = sender.view! as! DownloadButton
+        
+        if let savedName = downloadButton.titleLabel?.text?.replacingOccurrences(of: " ", with: "_").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+            let serverName = downloadButton.fileName {
+            let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory)
+            let url = Urls.notice_download.rawValue + "p_savefile=\(serverName)&p_realfile=\("_" + savedName)"
+            Alamofire.download(url, to: destination).response { response in
+                let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                let directory = URL(fileURLWithPath: path)
+                let oldUrl = directory.appendingPathComponent("_" + savedName)
+                let newUrl = URL(fileURLWithPath: directory.path + "/" + downloadButton.titleLabel!.text!.replacingOccurrences(of: " ", with: "_"))
+                do {
+                    if FileManager.default.fileExists(atPath: newUrl.path) {
+                        try FileManager.default.removeItem(atPath: newUrl.path)
+                    }
+                    try FileManager.default.moveItem(at: oldUrl, to: newUrl)
+                    self.documentController = UIDocumentInteractionController(url: newUrl)
+                    self.documentController.presentOptionsMenu(from: self.view.frame, in: self.view, animated: true)
+                    
+                    self.isDownloading = !self.isDownloading
+                } catch let error {
+                    print(error)
+                }
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,23 +75,21 @@ class NoticePostViewController: UIViewController {
                 textLabel.lineBreakMode = NSLineBreakMode.byCharWrapping
                 textLabel.numberOfLines = 0
                 textLabel.sizeToFit()
-                
-                var yPosition = textLabel.frame.height + 15
+
+                var yPosition = textLabel.frame.height + 35
                 for link in fileLinks {
                     if let href = try? link.attr("href"),
                         let fileName = self.getFileName(text: href),
                         let saveName = self.getSaveName(text: href) {
-                        let label = DownloadLabel()
-                        label.text = saveName
-                        label.fileName = fileName
-                        label.frame = CGRect(x: 15, y: yPosition, width: self.scrollView.frame.width, height: 0)
-                        label.sizeToFit()
-                        label.frame = CGRect(x: 15, y: yPosition, width: self.scrollView.frame.width - 30, height: label.frame.height + 15.0)
-                        self.scrollView.addSubview(label)
-                        yPosition += label.frame.height
+                        
+                        let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.startDownload))
+                        let buttonFrame = CGRect(x: 15, y: yPosition, width: self.scrollView.frame.width, height: 0)
+                        let downloadButton = DownloadButton(frame: buttonFrame, title: saveName, fileName: fileName, recognizer: recognizer)
+                        self.scrollView.addSubview(downloadButton)
+                        yPosition += downloadButton.frame.height + 10
                     }
                 }
-                
+
                 self.scrollView.addSubview(textLabel)
                 self.scrollView.alwaysBounceVertical = true
                 self.scrollView.contentSize = CGSize(width: self.view.frame.width, height: yPosition)

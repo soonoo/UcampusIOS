@@ -51,6 +51,7 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func removeFirstRowIfEmpty() {
         // check if last row is empty
+        if lectures.count == 0 { return }
         for item in lectures[0] {
             if item != nil {
                 return
@@ -62,6 +63,8 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func removeLastColIfEmpty() {
+        if lectures.count == 0 { return }
+        
         // check if last column is empty
         for item in lectures {
             if item[item.count-1] != nil {
@@ -137,8 +140,6 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    // MARK: - Table view data source
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

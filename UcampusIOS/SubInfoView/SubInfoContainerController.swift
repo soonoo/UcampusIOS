@@ -243,9 +243,3 @@ class CustomPanGestureRecognizer: UIPanGestureRecognizer {
         self.state = UIGestureRecognizerState.began
     }
 }
-
-protocol SubViewControllerWithTable {
-    var container: SubInfoContainerController! { get set }
-    var pages: [String] { get set }
-    var mainTableView: UITableView! { get set }
-}

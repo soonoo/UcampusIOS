@@ -1,5 +1,5 @@
 //
-//  BBSCellVIew.swift
+//  BBSCellView.swift
 //  UcampusIOS
 //
 //  Created by 홍순우 on 2018. 3. 6..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BBSCellView: UITableViewCell {
-    @IBOutlet weak var descriptionLabel: UILabel!
+@objc(BBSCellView) class BBSCellView: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
 }

@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftSoup
 
-class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTableSelectionNotifier {
+class MainViewController: UIViewController, MainTableRowSelectionNotifier, PopupTableRowSelectionNotifier {
     
     @IBOutlet weak var mainTableTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var indicatorView: UIActivityIndicatorView!
@@ -20,6 +20,8 @@ class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTab
     var popupTableView: UITableView!
     var opaqueView: UIView!
     var popupTableHeaderView: PopupTableHeaderView!
+    var popupTableHeaderViewHeight = CGFloat(70.0)
+    var popupTableHeight = CGFloat(150.0)
     
     var currentSubIndex: Int!
     var currentPopupIndex: Int!
@@ -28,23 +30,22 @@ class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTab
     let popupDelegate = PopupTableDelegate()
 
     @objc func checkAction(sender : UITapGestureRecognizer) {
-        popupTableHeaderView.isHidden = true
         mainTableView.isUserInteractionEnabled = true
         
         UIView.animate(withDuration: 0.2, animations: {
             let currentRect = self.popupTableView.frame
             self.opaqueView.alpha = CGFloat(0.0)
-            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y + 150, width: currentRect.size.width, height: currentRect.size.height)
-            self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: UIScreen.main.bounds.height - 70, width: currentRect.size.width, height: 70)
+            self.popupTableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y + 220, width: currentRect.size.width, height: currentRect.size.height)
+            self.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: UIScreen.main.bounds.height, width: currentRect.size.width, height: self.popupTableHeaderViewHeight)
         }, completion: {(finshied: Bool) in
             self.opaqueView.isHidden = !self.opaqueView.isHidden
         })
     }
-    
+
     func notifyMainTableSelection(row index: Int) {
         currentSubIndex = index
     }
-    
+
     func notifyPopupTableSelection(row index: Int) {
         currentPopupIndex = index
     }
@@ -56,12 +57,11 @@ class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTab
         mainDelegate.rowSelectionDelegate = self
 
         // init popup table header view
-        popupTableHeaderView = PopupTableHeaderView(frame: CGRect(x: CGFloat(0), y: UIScreen.main.bounds.height - 70, width: CGFloat(view.frame.width), height: CGFloat(70)))
-        popupTableHeaderView.isHidden = true
+        popupTableHeaderView = PopupTableHeaderView(frame: CGRect(x: CGFloat(0), y: UIScreen.main.bounds.height, width: CGFloat(view.frame.width), height: popupTableHeaderViewHeight))
 
         // init popup table view
         let popupTableHeight = 150
-        popupTableView = UITableView(frame: CGRect(x: CGFloat(0), y: UIScreen.main.bounds.height, width: CGFloat(view.frame.width), height: CGFloat(popupTableHeight)))
+        popupTableView = UITableView(frame: CGRect(x: CGFloat(0), y: UIScreen.main.bounds.height + popupTableHeaderViewHeight, width: CGFloat(view.frame.width), height: CGFloat(popupTableHeight)))
         popupTableView.dataSource = popupDelegate
         popupTableView.register(PopupTableViewCell.self, forCellReuseIdentifier: "popupCell")
         popupTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -79,6 +79,13 @@ class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTab
         popupDelegate.rowSelectionDelegate = self
         popupTableView.delegate = popupDelegate
 
+        self.mainTableView.dataSource = self.mainDelegate
+        self.mainTableView.delegate = self.mainDelegate
+        
+        self.mainDelegate.popupTableHeaderView = self.popupTableHeaderView
+        self.mainDelegate.opaqueView = self.opaqueView
+        self.mainDelegate.popupTableView = self.popupTableView
+        
         // add popup table and opaque view
         tabBarController!.view.addSubview(opaqueView)
         tabBarController!.view.addSubview(popupTableView)
@@ -90,7 +97,7 @@ class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTab
                 let doc = try? SwiftSoup.parse(html),
                 let tag = try? doc.select("td[width='9']"),
                 let td = tag.first()?.parent()?.parent()?.children() {
-                
+
                 for el in td {
                     let title = try? el.child(1).text()
                     let info = try? el.child(2).text()
@@ -101,13 +108,8 @@ class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTab
                 }
 
                 // init main table view
-                self.mainTableView.dataSource = self.mainDelegate
-                self.mainTableView.delegate = self.mainDelegate
                 
                 self.mainDelegate.lectures += self.lectures
-                self.mainDelegate.popupTableHeaderView = self.popupTableHeaderView
-                self.mainDelegate.opaqueView = self.opaqueView
-                self.mainDelegate.popupTableView = self.popupTableView
                 self.mainTableView.reloadData()
                 
                 self.indicatorView.isHidden = true
@@ -125,7 +127,7 @@ class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTab
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? SyllabusViewController {
             destination.lecture = lectures[currentSubIndex]
@@ -136,10 +138,10 @@ class MainViewController: UIViewController, MainTableSelectionNotifier, PopupTab
     }
 }
 
-protocol MainTableSelectionNotifier {
+protocol MainTableRowSelectionNotifier {
     func notifyMainTableSelection(row index: Int)
 }
 
-protocol PopupTableSelectionNotifier {
+protocol PopupTableRowSelectionNotifier {
     func notifyPopupTableSelection(row index: Int)
 }

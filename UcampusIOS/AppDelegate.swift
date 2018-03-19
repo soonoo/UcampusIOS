@@ -23,27 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        // save cookies before when app enters background state
-        let cookies = HTTPCookieStorage.shared.cookies ?? []
-        let db = UserDefaults.standard
-        db.set(NSKeyedArchiver.archivedData(withRootObject: cookies), forKey: "session")
-        
-        for cookie in cookies {
-            HTTPCookieStorage.shared.deleteCookie(cookie)
-        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // load cookies from UserDefaults when app is back to foreground
-        let data = UserDefaults.standard.object(forKey: "session") as! Data
-        let cookies = NSKeyedUnarchiver.unarchiveObject(with: data) as! [HTTPCookie]
-        
-        for cookie in cookies {
-            HTTPCookieStorage.shared.setCookie(cookie)
-        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

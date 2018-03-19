@@ -7,6 +7,7 @@ target 'UcampusIOS' do
 	pod 'Alamofire', '~> 4.7'
     pod 'AlamofireNetworkActivityIndicator', '~> 2.2'
     pod 'SwiftSoup'
+    pod 'KeychainSwift', '~> 10.0'
   # Pods for UcampusIOS
 
   target 'UcampusIOSTests' do

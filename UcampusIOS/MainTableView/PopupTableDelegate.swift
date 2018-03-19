@@ -13,7 +13,7 @@ class PopupTableDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
     var lectures = [Lecture]()
     var controller: MainViewController!
     var selectedRow: Int!
-    var rowSelectionDelegate: PopupTableSelectionNotifier!
+    var rowSelectionDelegate: PopupTableRowSelectionNotifier!
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -30,12 +30,9 @@ class PopupTableDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
         UIView.animate(withDuration: 0.2, animations: {
             let currentRect = tableView.frame
             self.controller.opaqueView.alpha = CGFloat(0.0)
-            tableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y + 150, width: currentRect.size.width, height: currentRect.size.height)
-            self.controller.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: UIScreen.main.bounds.height - 70, width: currentRect.size.width, height: 70)
-        }, completion: {(finshied: Bool) in
-//            self.controller.opaqueView.isHidden = !self.controller.opaqueView.isHidden
-//            self.controller.performSegue(withIdentifier: "showDetailSubInfo", sender: self.controller)
-            
+            tableView.frame = CGRect(x: currentRect.origin.x, y: currentRect.origin.y + 220, width: currentRect.size.width, height: currentRect.size.height)
+            self.controller.popupTableHeaderView.frame = CGRect(x: currentRect.origin.x, y: UIScreen.main.bounds.height, width: currentRect.size.width, height: 70)
+        }, completion: {(_: Bool) in
             self.controller.opaqueView.isHidden = !self.controller.opaqueView.isHidden
             
             switch indexPath.row {

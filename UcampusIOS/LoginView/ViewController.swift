@@ -8,9 +8,9 @@
 
 import UIKit
 import Alamofire
+import KeychainSwift
 
 class ViewController: UIViewController {
-    @IBOutlet weak var bgImageView: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var logoTextField: UILabel!
     @IBOutlet weak var pwTextField: UITextField!
@@ -20,7 +20,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var logoTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var loginButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var constraintBetweenTextFields: NSLayoutConstraint!
-    @IBOutlet weak var bgImageLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var loginButtonBottomConstraint: NSLayoutConstraint!
     
     var isTextFieldVisible = false
@@ -32,6 +31,15 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let keyChain = KeychainSwift()
+        if let id = keyChain.get("login_id") ,
+            let pw = keyChain.get("login_pw") {
+            idTextField.text = id
+            pwTextField.text = pw
+            login()
+        }
+
         // make login button border radius
         loginButton.layer.cornerRadius = 6
         loginButton.clipsToBounds = true
@@ -48,11 +56,6 @@ class ViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-       // self.bgImageLeadingConstraint.constant -= (self.bgImageView.image!.size.width - self.view.bounds.width)
-//        UIView.animate(withDuration: 150, delay: 0, options: [.repeat, .autoreverse, .curveLinear], animations: {
-//            self.view.layoutIfNeeded()
-//        }, completion: nil)
-        
         self.buttonAnimatedDistance = self.loginButton.center.y - self.idTextField.bounds.height*2 - UIApplication.shared.statusBarFrame.height - loginButtonTopConstraint.constant - constraintBetweenTextFields.constant - self.loginButton.bounds.height/2 - 40
         self.logoAnimatedDistance = self.logoTextField.center.y + (self.logoTextField.bounds.height/2)
     }
@@ -93,7 +96,7 @@ class ViewController: UIViewController {
         
         self.isTextFieldVisible = !self.isTextFieldVisible
     }
-    
+
     func deleteAllCookies() {
         let cookieStorage = HTTPCookieStorage.shared
         if let url = URL(string: "https://info2.kw.ac.kr"), let cookies = cookieStorage.cookies(for: url) {
@@ -102,14 +105,21 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+
     func getSessionCookie() {
         Alamofire.request(Urls.session.rawValue, method: .get, parameters: nil, encoding: URLEncoding.queryString).response() { response in
             self.loginIndicator.isHidden = true
-            
+
             self.loginButton.setTitle("로그인", for: .normal)
             self.loginInProcess = false
-            
+
+            let keychain = KeychainSwift()
+            keychain.set(self.idTextField.text!, forKey: "login_id")
+            keychain.set(self.pwTextField.text!, forKey: "login_pw")
+
+            self.idTextField.text = ""
+            self.pwTextField.text = ""
+
             self.dismiss(animated: true, completion: nil)
             self.performSegue(withIdentifier: "login", sender: self)
         }

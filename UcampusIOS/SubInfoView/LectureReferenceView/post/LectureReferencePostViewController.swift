@@ -22,18 +22,29 @@ class LectureReferencePostViewController: UIViewController {
     @objc func startDownload(sender: UITapGestureRecognizer) {
         if isDownloading { return }
         isDownloading = !isDownloading
-        let label = sender.view! as! DownloadLabel
+        let downloadButton = sender.view! as! DownloadButton
 
-        if let savedName = label.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
-            let serverName = label.fileName {
+        if let savedName = downloadButton.titleLabel?.text?.replacingOccurrences(of: " ", with: "_").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+            let serverName = downloadButton.fileName {
             let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory)
-            
-            let url = Urls.notice_download.rawValue + "p_savefile=\(serverName)&p_realfile=\(savedName)"
+            let url = Urls.notice_download.rawValue + "p_savefile=\(serverName)&p_realfile=\("_" + savedName)"
             Alamofire.download(url, to: destination).response { response in
-                //self.documentController = UIDocumentInteractionController(url: URL(fileURLWithPath: response.destinationURL?.path ?? ""))
-                //self.documentController.presentOptionsMenu(from: self.view.frame, in: self.view, animated: true)
-                
-                self.isDownloading = !self.isDownloading
+                let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                let directory = URL(fileURLWithPath: path)
+                let oldUrl = directory.appendingPathComponent("_" + savedName)
+                let newUrl = URL(fileURLWithPath: directory.path + "/" + downloadButton.titleLabel!.text!.replacingOccurrences(of: " ", with: "_"))
+                do {
+                    if FileManager.default.fileExists(atPath: newUrl.path) {
+                        try FileManager.default.removeItem(atPath: newUrl.path)
+                    }
+                    try FileManager.default.moveItem(at: oldUrl, to: newUrl)
+                    self.documentController = UIDocumentInteractionController(url: newUrl)
+                    self.documentController.presentOptionsMenu(from: self.view.frame, in: self.view, animated: true)
+                    
+                    self.isDownloading = !self.isDownloading
+                } catch let error {
+                    print(error)
+                }
             }
         }
     }
@@ -66,21 +77,17 @@ class LectureReferencePostViewController: UIViewController {
                 textLabel.numberOfLines = 0
                 textLabel.sizeToFit()
 
-                var yPosition = textLabel.frame.height + 15
+                var yPosition = textLabel.frame.height + 35
                 for link in fileLinks {
                     if let href = try? link.attr("href"),
                         let fileName = self.getFileName(text: href),
                         let saveName = self.getSaveName(text: href) {
-                        let label = DownloadLabel()
-                        label.text = saveName
-                        label.fileName = fileName
-                        label.isUserInteractionEnabled = true
-                        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.startDownload)))
-                        label.frame = CGRect(x: 15, y: yPosition, width: self.scrollView.frame.width, height: 0)
-                        label.sizeToFit()
-                        label.frame = CGRect(x: 15, y: yPosition, width: self.scrollView.frame.width - 30, height: label.frame.height + 15.0)
-                        self.scrollView.addSubview(label)
-                        yPosition += label.frame.height
+
+                        let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.startDownload))
+                        let buttonFrame = CGRect(x: 15, y: yPosition, width: self.scrollView.frame.width, height: 0)
+                        let downloadButton = DownloadButton(frame: buttonFrame, title: saveName, fileName: fileName, recognizer: recognizer)
+                        self.scrollView.addSubview(downloadButton)
+                        yPosition += downloadButton.frame.height + 10
                     }
                 }
 
@@ -119,28 +126,22 @@ class LectureReferencePostViewController: UIViewController {
     }
 }
 
-class DownloadLabel: UILabel {
+class DownloadButton: UIButton {
     var fileName: String?
-
-    override var text: String? {
-        didSet {
-            guard let text = text else { return }
-            let textRange = NSMakeRange(0, text.count)
-            let attributedText = NSMutableAttributedString(string: text)
-            attributedText.addAttribute(.underlineStyle , value: NSUnderlineStyle.styleSingle.rawValue, range: textRange)
-            // Add other attributes if needed
-            self.attributedText = attributedText
-        }
-    }
-
-    override init(frame: CGRect) {
+    
+    init(frame: CGRect, title: String, fileName: String, recognizer: UITapGestureRecognizer) {
         super.init(frame: frame)
-        textColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
-        font = font.withSize(17)
+        layer.cornerRadius = 10.0
+        titleLabel?.font = titleLabel?.font.withSize(18)
+        setTitle(title, for: .normal)
+        setTitleColor(.black, for: .normal)
+        self.fileName = fileName
+        addGestureRecognizer(recognizer)
+
+        sizeToFit()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }
-
