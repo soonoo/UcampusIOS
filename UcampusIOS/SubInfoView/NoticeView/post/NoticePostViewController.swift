@@ -21,17 +21,18 @@ class NoticePostViewController: UIViewController {
     @objc func startDownload(sender: UITapGestureRecognizer) {
         if isDownloading { return }
         isDownloading = !isDownloading
-        let downloadButton = sender.view! as! DownloadButton
+        let downloadLabel = sender.view! as! DownloadLabel
         
-        if let savedName = downloadButton.titleLabel?.text?.replacingOccurrences(of: " ", with: "_").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
-            let serverName = downloadButton.fileName {
+        if let savedName = downloadLabel.text?.replacingOccurrences(of: " ", with: "_").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+            let serverName = downloadLabel.fileName {
             let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory)
             let url = Urls.notice_download.rawValue + "p_savefile=\(serverName)&p_realfile=\("_" + savedName)"
             Alamofire.download(url, to: destination).response { response in
                 let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
                 let directory = URL(fileURLWithPath: path)
-                let oldUrl = directory.appendingPathComponent("_" + savedName)
-                let newUrl = URL(fileURLWithPath: directory.path + "/" + downloadButton.titleLabel!.text!.replacingOccurrences(of: " ", with: "_"))
+                let oldUrl = response.destinationURL!
+                let newUrl = URL(fileURLWithPath: directory.path + "/" + downloadLabel.text!.replacingOccurrences(of: " ", with: "_"))
+
                 do {
                     if FileManager.default.fileExists(atPath: newUrl.path) {
                         try FileManager.default.removeItem(atPath: newUrl.path)
@@ -84,9 +85,11 @@ class NoticePostViewController: UIViewController {
                         
                         let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.startDownload))
                         let buttonFrame = CGRect(x: 15, y: yPosition, width: self.scrollView.frame.width, height: 0)
-                        let downloadButton = DownloadButton(frame: buttonFrame, title: saveName, fileName: fileName, recognizer: recognizer)
-                        self.scrollView.addSubview(downloadButton)
-                        yPosition += downloadButton.frame.height + 10
+                        let downloadLabel = DownloadLabel(frame: buttonFrame, title: saveName, fileName: fileName, recognizer: recognizer)
+                        self.scrollView.addSubview(downloadLabel)
+                        downloadLabel.sizeToFit()
+                        downloadLabel.frame = CGRect(x: downloadLabel.frame.origin.x, y: downloadLabel.frame.origin.y, width: UIScreen.main.bounds.width-30.0, height: downloadLabel.frame.height)
+                        yPosition += downloadLabel.frame.height + 10
                     }
                 }
 
@@ -101,23 +104,21 @@ class NoticePostViewController: UIViewController {
     }
 
     func getFileName(text: String) -> String? {
-        guard let fromIndex = text.index(of: "(") else { return nil }
-        guard let toIndex = text.index(of: ",") else { return nil }
-        let from = text.distance(from: text.startIndex, to: fromIndex) + 2
-        let to = text.distance(from: text.startIndex, to: toIndex) - 2
+        guard let fromIndex = text.range(of: "download('") else { return nil }
+        guard let toIndex = text.range(of: "','") else { return nil }
+        let from = text.distance(from: text.startIndex, to: fromIndex.upperBound)
+        let to = text.distance(from: text.startIndex, to: toIndex.lowerBound) - 1
         
-        let result: String? = text.substr(from: from, to: to)
-        return result
+        return text.substr(from: from, to: to)
     }
     
     func getSaveName(text: String) -> String? {
-        guard let fromIndex = text.index(of: ",") else { return nil }
-        guard let toIndex = text.index(of: ")") else { return nil }
-        let from = text.distance(from: text.startIndex, to: fromIndex) + 2
-        let to = text.distance(from: text.startIndex, to: toIndex) - 2
+        guard let fromIndex = text.range(of: "','") else { return nil }
+        guard let toIndex = text.range(of: "');") else { return nil }
+        let from = text.distance(from: text.startIndex, to: fromIndex.upperBound)
+        let to = text.distance(from: text.startIndex, to: toIndex.lowerBound) - 1
         
-        let result: String? = text.substr(from: from, to: to)
-        return result
+        return text.substr(from: from, to: to)
     }
 
     override func didReceiveMemoryWarning() {
