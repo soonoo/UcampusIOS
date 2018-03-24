@@ -33,14 +33,15 @@ class LectureReferencePostViewController: UIViewController {
                 let directory = URL(fileURLWithPath: path)
                 let oldUrl = response.destinationURL!
                 let newUrl = URL(fileURLWithPath: directory.path + "/" + downloadLabel.text!.replacingOccurrences(of: " ", with: "_"))
-
+                print(savedName)
+                print(serverName)
                 do {
                     if FileManager.default.fileExists(atPath: newUrl.path) {
                         try FileManager.default.removeItem(atPath: newUrl.path)
                     }
                     try FileManager.default.moveItem(at: oldUrl, to: newUrl)
                     self.documentController = UIDocumentInteractionController(url: newUrl)
-                    self.documentController.presentOptionsMenu(from: self.view.frame, in: self.view, animated: true)
+                    self.documentController.presentOptionsMenu (from: CGRect(x: 0, y: 0, width: 10.0, height: 10.0) , in: self.view, animated: true)
                     
                     self.isDownloading = !self.isDownloading
                 } catch let error {

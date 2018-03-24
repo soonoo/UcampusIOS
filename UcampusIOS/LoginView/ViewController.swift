@@ -12,21 +12,18 @@ import KeychainSwift
 
 class ViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var logoTextField: UILabel!
+    @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var pwTextField: UITextField!
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var loginIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var logoTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var loginButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var constraintBetweenTextFields: NSLayoutConstraint!
     @IBOutlet weak var loginButtonBottomConstraint: NSLayoutConstraint!
     
     var isTextFieldVisible = false
-    
+    var autoLogin = false
     var buttonAnimatedDistance: CGFloat = 0.0
-    var logoAnimatedDistance: CGFloat = 0.0
-    
     var loginInProcess = false
     
     override func viewDidLoad() {
@@ -35,8 +32,10 @@ class ViewController: UIViewController {
         let keyChain = KeychainSwift()
         if let id = keyChain.get("login_id") ,
             let pw = keyChain.get("login_pw") {
+            autoLogin = true
             idTextField.text = id
             pwTextField.text = pw
+            loginButton.isHidden = true
             login()
         }
 
@@ -57,7 +56,6 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         self.buttonAnimatedDistance = self.loginButton.center.y - self.idTextField.bounds.height*2 - UIApplication.shared.statusBarFrame.height - loginButtonTopConstraint.constant - constraintBetweenTextFields.constant - self.loginButton.bounds.height/2 - 40
-        self.logoAnimatedDistance = self.logoTextField.center.y + (self.logoTextField.bounds.height/2)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,11 +66,8 @@ class ViewController: UIViewController {
     }
     
     func toggleTextField() {
-        print("called")
-        self.logoAnimatedDistance *= -1
         self.buttonAnimatedDistance *= -1
 
-        self.logoTopConstraint.constant += self.logoAnimatedDistance
         self.loginButtonBottomConstraint.constant -= self.buttonAnimatedDistance
         
         UIView.animate(withDuration: 0.3, animations: {
@@ -81,6 +76,7 @@ class ViewController: UIViewController {
     }
     
     func animate() {
+        logoImageView.isHidden = !logoImageView.isHidden
         toggleTextField()
         
         if self.isTextFieldVisible {
@@ -120,8 +116,12 @@ class ViewController: UIViewController {
             self.idTextField.text = ""
             self.pwTextField.text = ""
 
-            self.dismiss(animated: true, completion: nil)
+            if !self.autoLogin {
+                self.animate()
+            }
             self.performSegue(withIdentifier: "login", sender: self)
+            self.loginButton.isHidden = false
+            self.autoLogin = false
         }
     }
     
