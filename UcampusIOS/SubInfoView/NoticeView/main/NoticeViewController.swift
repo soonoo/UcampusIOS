@@ -19,7 +19,7 @@ class NoticeViewController: UIViewController, SubViewControllerWithTable {
     var delegate: BBSTableDelegate!
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? NoticePostViewController {
+        if let destination = segue.destination as? BBSPostViewController {
             destination.lectureCode = delegate.postLinks[delegate.rowNumber].postCode
         }
     }
@@ -31,7 +31,6 @@ class NoticeViewController: UIViewController, SubViewControllerWithTable {
         delegate = BBSTableDelegate(container: container, controller: self, segue: "showNoticePost")
         mainTableView.delegate = delegate
         mainTableView.dataSource = delegate
-        delegate.container = container
         mainTableView.register(UINib(nibName: "BBSCellView", bundle: nil), forCellReuseIdentifier: "BBSCellView")
         mainTableView.tableFooterView = UIView()
         

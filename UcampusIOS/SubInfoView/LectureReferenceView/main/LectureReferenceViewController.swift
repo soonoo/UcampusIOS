@@ -19,7 +19,7 @@ class LectureReferenceViewController: UIViewController, SubViewControllerWithTab
     var container: SubInfoContainerController!
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? LectureReferencePostViewController {
+        if let destination = segue.destination as? BBSPostViewController {
             destination.lectureCode = delegate.postLinks[delegate.rowNumber].postCode
         }
     }

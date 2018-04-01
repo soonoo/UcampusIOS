@@ -71,7 +71,7 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 return
             }
         }
-        
+
         // remove last column
         for i in 0..<lectures.count {
             lectures[i].removeLast()
@@ -144,7 +144,7 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     // returns cell count
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.lectures.count == 0 ? 0 : self.lectures.count + 1
@@ -174,7 +174,7 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         var bgColor = TimeTableViewController.getUIColor((255, 255, 255))
 
-        for i in 0..<self.lectures[0].count {
+        for i in 0..<row.count {
             var title = row[i]?.title ?? ""
             var info = row[i]?.info ?? ""
 
@@ -184,9 +184,9 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
             } else {
                 bgColor = subColorMap[title]!
             }
-            
-            if indexPath.row != 0 && title != "" {
-                if (self.lectures[indexPath.row-2][i]?.title ?? "") == title {
+
+            if indexPath.row > 1 {
+                if (self.lectures[indexPath.row - 2][i]?.title ?? "") == title {
                     title = ""
                     info = ""
                 }

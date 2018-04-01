@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import WebKit
 import Alamofire
 import SwiftSoup
 
-class LectureReferencePostViewController: UIViewController {
+class BBSPostViewController: UIViewController {
     var documentController: UIDocumentInteractionController!
     var lectureCode: String!
     var scrollView: UIScrollView!
@@ -33,8 +32,6 @@ class LectureReferencePostViewController: UIViewController {
                 let directory = URL(fileURLWithPath: path)
                 let oldUrl = response.destinationURL!
                 let newUrl = URL(fileURLWithPath: directory.path + "/" + downloadLabel.text!.replacingOccurrences(of: " ", with: "_"))
-                print(savedName)
-                print(serverName)
                 do {
                     if FileManager.default.fileExists(atPath: newUrl.path) {
                         try FileManager.default.removeItem(atPath: newUrl.path)

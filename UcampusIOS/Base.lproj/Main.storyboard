@@ -257,10 +257,10 @@
             </objects>
             <point key="canvasLocation" x="5085" y="-789"/>
         </scene>
-        <!--Notice Post View Controller-->
+        <!--Post View Controller-->
         <scene sceneID="yyz-JS-aAx">
             <objects>
-                <viewController id="yBY-Jc-a9x" customClass="NoticePostViewController" customModule="UcampusIOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yBY-Jc-a9x" customClass="BBSPostViewController" customModule="UcampusIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yDl-TT-J1o">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -333,10 +333,10 @@
             </objects>
             <point key="canvasLocation" x="5085" y="-72"/>
         </scene>
-        <!--Lecture Reference Post View Controller-->
+        <!--Post View Controller-->
         <scene sceneID="5CM-Lk-BgF">
             <objects>
-                <viewController id="FBN-tZ-S2X" customClass="LectureReferencePostViewController" customModule="UcampusIOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="FBN-tZ-S2X" customClass="BBSPostViewController" customModule="UcampusIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pn3-vU-bZ7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

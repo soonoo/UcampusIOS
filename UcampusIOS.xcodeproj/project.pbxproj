@@ -10,7 +10,7 @@
 		91010A6F204EB96A00641148 /* BBSCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91010A6D204EB96A00641148 /* BBSCellView.swift */; };
 		91010A7C204ECFE900641148 /* Pods_UcampusIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91010A7D204ECFE900641148 /* Pods_UcampusIOS.framework */; };
 		913E8F4D2050498100AA5116 /* BBSItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E8F4C2050498100AA5116 /* BBSItem.swift */; };
-		913E8F4F2050563200AA5116 /* LectureReferencePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E8F4E2050563200AA5116 /* LectureReferencePostViewController.swift */; };
+		913E8F4F2050563200AA5116 /* BBSPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E8F4E2050563200AA5116 /* BBSPostViewController.swift */; };
 		914BB5862039EA2E00E568FB /* LectureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BB5852039EA2E00E568FB /* LectureTableViewController.swift */; };
 		914BB5882039EA8F00E568FB /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BB5872039EA8F00E568FB /* Lecture.swift */; };
 		914BB5922039EF0C00E568FB /* UcampusIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BB5912039EF0C00E568FB /* UcampusIOSTests.swift */; };
@@ -30,7 +30,6 @@
 		91803F80203E92D000E9B592 /* PopupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91803F7F203E92D000E9B592 /* PopupTableViewCell.swift */; };
 		91803F82203E931E00E9B592 /* PopupTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91803F81203E931E00E9B592 /* PopupTableDelegate.swift */; };
 		91A59983204142BC00EA963E /* PopupTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A59982204142BC00EA963E /* PopupTableHeaderView.swift */; };
-		91A83F2A2052ACE900D64779 /* NoticePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A83F292052ACE900D64779 /* NoticePostViewController.swift */; };
 		91B175F6205ECE5900CE1BE0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B175F5205ECE5900CE1BE0 /* NetworkManager.swift */; };
 		91C30D9D204BCAC700D63D5F /* SyllabusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C30D9C204BCAC700D63D5F /* SyllabusViewController.swift */; };
 		91D34482205BB07000373AE8 /* BBSCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91D34481205BB07000373AE8 /* BBSCellView.xib */; };
@@ -53,41 +52,6 @@
 			remoteGlobalIDString = 9167140C2034D2AC006D7C41;
 			remoteInfo = UcampusIOS;
 		};
-		914BB5D4203B3BA400E568FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8CE418161DAA54A900240B42;
-			remoteInfo = "SwiftSoup-iOS";
-		};
-		914BB5D6203B3BA400E568FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BD3B5BA91FBED933001FDB3B;
-			remoteInfo = "SwiftSoup-macOS";
-		};
-		914BB5D8203B3BA400E568FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BD3B5BEC1FC063BD001FDB3B;
-			remoteInfo = "SwiftSoup-tvOS";
-		};
-		914BB5DA203B3BA400E568FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BD3B5C2F1FC06423001FDB3B;
-			remoteInfo = "SwiftSoup-watchOS";
-		};
-		914BB5DC203B3BA400E568FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8CE4181F1DAA54A900240B42;
-			remoteInfo = SwiftSoupTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -99,7 +63,7 @@
 		91010A6D204EB96A00641148 /* BBSCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBSCellView.swift; sourceTree = "<group>"; };
 		91010A7D204ECFE900641148 /* Pods_UcampusIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_UcampusIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		913E8F4C2050498100AA5116 /* BBSItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBSItem.swift; sourceTree = "<group>"; };
-		913E8F4E2050563200AA5116 /* LectureReferencePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReferencePostViewController.swift; sourceTree = "<group>"; };
+		913E8F4E2050563200AA5116 /* BBSPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBSPostViewController.swift; sourceTree = "<group>"; };
 		914BB5852039EA2E00E568FB /* LectureTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureTableViewController.swift; sourceTree = "<group>"; };
 		914BB5872039EA8F00E568FB /* Lecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lecture.swift; sourceTree = "<group>"; };
 		914BB58F2039EF0C00E568FB /* UcampusIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UcampusIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,7 +71,6 @@
 		914BB5932039EF0D00E568FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		914BB5B1203AADC000E568FB /* LectureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureTableViewCell.swift; sourceTree = "<group>"; };
 		914BB5B5203AB13900E568FB /* Urls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Urls.swift; sourceTree = "<group>"; };
-		914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftSoup.xcodeproj; path = "../../Downloads/SwiftSoup-master 2/SwiftSoup.xcodeproj"; sourceTree = "<group>"; };
 		9167140D2034D2AC006D7C41 /* UcampusIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UcampusIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		916714102034D2AC006D7C41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		916714122034D2AC006D7C41 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -124,7 +87,6 @@
 		91803F7F203E92D000E9B592 /* PopupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTableViewCell.swift; sourceTree = "<group>"; };
 		91803F81203E931E00E9B592 /* PopupTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTableDelegate.swift; sourceTree = "<group>"; };
 		91A59982204142BC00EA963E /* PopupTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTableHeaderView.swift; sourceTree = "<group>"; };
-		91A83F292052ACE900D64779 /* NoticePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticePostViewController.swift; sourceTree = "<group>"; };
 		91B175F5205ECE5900CE1BE0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		91C30D9C204BCAC700D63D5F /* SyllabusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusViewController.swift; sourceTree = "<group>"; };
 		91D34481205BB07000373AE8 /* BBSCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BBSCellView.xib; sourceTree = "<group>"; };
@@ -190,23 +152,10 @@
 			path = MainTableView;
 			sourceTree = "<group>";
 		};
-		914BB5CD203B3BA400E568FB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				914BB5D5203B3BA400E568FB /* SwiftSoup.framework */,
-				914BB5D7203B3BA400E568FB /* SwiftSoup.framework */,
-				914BB5D9203B3BA400E568FB /* SwiftSoup.framework */,
-				914BB5DB203B3BA400E568FB /* SwiftSoup.framework */,
-				914BB5DD203B3BA400E568FB /* SwiftSoupTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		916714042034D2AC006D7C41 = {
 			isa = PBXGroup;
 			children = (
 				9167140F2034D2AC006D7C41 /* UcampusIOS */,
-				914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */,
 				914BB5902039EF0C00E568FB /* UcampusIOSTests */,
 				9167140E2034D2AC006D7C41 /* Products */,
 				FD939708042AF8C7D6301B30 /* Pods */,
@@ -282,7 +231,7 @@
 		91DF9353205FF3900096D68C /* post */ = {
 			isa = PBXGroup;
 			children = (
-				913E8F4E2050563200AA5116 /* LectureReferencePostViewController.swift */,
+				913E8F4E2050563200AA5116 /* BBSPostViewController.swift */,
 			);
 			path = post;
 			sourceTree = "<group>";
@@ -293,14 +242,6 @@
 				91EB62FF2048165100D284FE /* NoticeViewController.swift */,
 			);
 			path = main;
-			sourceTree = "<group>";
-		};
-		91DF935720600D2F0096D68C /* post */ = {
-			isa = PBXGroup;
-			children = (
-				91A83F292052ACE900D64779 /* NoticePostViewController.swift */,
-			);
-			path = post;
 			sourceTree = "<group>";
 		};
 		91E01B1D20451BAC00CD10CC /* SubInfoView */ = {
@@ -322,7 +263,6 @@
 			isa = PBXGroup;
 			children = (
 				91DF935620600D2A0096D68C /* main */,
-				91DF935720600D2F0096D68C /* post */,
 			);
 			path = NoticeView;
 			sourceTree = "<group>";
@@ -443,12 +383,6 @@
 			mainGroup = 916714042034D2AC006D7C41;
 			productRefGroup = 9167140E2034D2AC006D7C41 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 914BB5CD203B3BA400E568FB /* Products */;
-					ProjectRef = 914BB5CC203B3BA400E568FB /* SwiftSoup.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				9167140C2034D2AC006D7C41 /* UcampusIOS */,
@@ -456,44 +390,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		914BB5D5203B3BA400E568FB /* SwiftSoup.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftSoup.framework;
-			remoteRef = 914BB5D4203B3BA400E568FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		914BB5D7203B3BA400E568FB /* SwiftSoup.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftSoup.framework;
-			remoteRef = 914BB5D6203B3BA400E568FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		914BB5D9203B3BA400E568FB /* SwiftSoup.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftSoup.framework;
-			remoteRef = 914BB5D8203B3BA400E568FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		914BB5DB203B3BA400E568FB /* SwiftSoup.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftSoup.framework;
-			remoteRef = 914BB5DA203B3BA400E568FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		914BB5DD203B3BA400E568FB /* SwiftSoupTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SwiftSoupTests.xctest;
-			remoteRef = 914BB5DC203B3BA400E568FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		914BB58D2039EF0C00E568FB /* Resources */ = {
@@ -638,7 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91E01B1F20451BF600CD10CC /* SubInfoContainerController.swift in Sources */,
-				913E8F4F2050563200AA5116 /* LectureReferencePostViewController.swift in Sources */,
+				913E8F4F2050563200AA5116 /* BBSPostViewController.swift in Sources */,
 				916C44932053D1E600EF78D6 /* Strings.swift in Sources */,
 				916C44912053CD2800EF78D6 /* SettingsTableViewCell.swift in Sources */,
 				914BB5882039EA8F00E568FB /* Lecture.swift in Sources */,
@@ -664,7 +560,6 @@
 				91F5ECB8203BB7DF00E9A2FC /* TimeTableViewController.swift in Sources */,
 				91B175F6205ECE5900CE1BE0 /* NetworkManager.swift in Sources */,
 				914BB5862039EA2E00E568FB /* LectureTableViewController.swift in Sources */,
-				91A83F2A2052ACE900D64779 /* NoticePostViewController.swift in Sources */,
 				91803F82203E931E00E9B592 /* PopupTableDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -855,8 +750,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = soonoome.UcampusIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
 		};
@@ -872,11 +769,14 @@
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = soonoome.UcampusIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
 		};
