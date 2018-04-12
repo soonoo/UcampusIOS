@@ -12,10 +12,12 @@ struct BBSItem {
     var title: String
     var date: String
     var postCode: String
+    var id: String
     
-    init(title: String, date: String, postCode: String) {
+    init(title: String, date: String, postCode: String, id: String) {
         self.title = title
         self.date = date
         self.postCode = postCode
+        self.id = id
     }
 }

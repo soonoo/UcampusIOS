@@ -60,10 +60,6 @@ struct Lecture {
         return "&p_year=" + year + "&p_subj=U" + code + "&p_subjseq=" + semester + "&p_class=" + division
     }
 
-    var noticePostQuery: String {
-        return "&p_bdseq=98296&p_pageno=0&p_subj=U2018109227220013&p_year=2018&p_subjseq=1&p_class=01"
-    }
-
     var referenceQuery: String {
         return "&p_subj=U" + code + "&p_year=" + year + "&p_subjseq=" + semester + "&p_class=" + division
     }

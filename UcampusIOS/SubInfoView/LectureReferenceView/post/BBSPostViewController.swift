@@ -13,6 +13,7 @@ import SwiftSoup
 class BBSPostViewController: UIViewController {
     var documentController: UIDocumentInteractionController!
     var lectureCode: String!
+    var isNoticeView: Bool!
     var scrollView: UIScrollView!
     var isDownloading = false
 
@@ -50,8 +51,9 @@ class BBSPostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let url = Urls.reference_view.rawValue + "&p_bdseq=" + lectureCode
+        
+        let urlType = isNoticeView ? Urls.notice_view : Urls.reference_view
+        let url = urlType.rawValue + "&p_bdseq=" + lectureCode
         Alamofire.request(url).response { response in
             if let data = response.data,
                 let html = String(data: data, encoding: .utf8),

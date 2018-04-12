@@ -96,9 +96,9 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
             // time table starts at index '2'
             for i in 2..<elements.size() {
                 self.lectures.append([Lecture?]())
-                
+
                 let row = elements.get(i).children()
-                
+
                 // monday(1) to saturday(6), (0) is for period
                 for j in 1...6 {
                     if let text = try? row.get(j).text(), text.count != 0 {
