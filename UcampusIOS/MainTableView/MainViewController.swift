@@ -92,7 +92,7 @@ class MainViewController: UIViewController, MainTableRowSelectionNotifier, Popup
         tabBarController!.view.addSubview(popupTableHeaderView)
 
         Alamofire.request(Urls.sub_info.rawValue, method: .get, parameters: nil, encoding:  URLEncoding.queryString).responseJSON() { response in
-            
+
             if let html = String(data: response.data!, encoding: .utf8),
                 let doc = try? SwiftSoup.parse(html),
                 let tag = try? doc.select("td[width='9']"),
@@ -101,9 +101,16 @@ class MainViewController: UIViewController, MainTableRowSelectionNotifier, Popup
                 for el in td {
                     let title = try? el.child(1).text()
                     let info = try? el.child(2).text()
-                    let code = try? el.child(3).child(0).attr("href").substr(from: 24, to: 39)
+                    let href = try? el.child(3).child(0).attr("href")
+                    var code: String!
+
+                    if href!.count > 39 {
+                        code = href!.substr(from: 24, to: 39)
+                    } else {
+                        code = ""
+                    }
                     
-                    let lecture = Lecture(title: title!, info: info!, code: code!)
+                    let lecture = Lecture(title: title!, info: info!, code: code)
                     self.lectures.append(lecture)
                 }
 

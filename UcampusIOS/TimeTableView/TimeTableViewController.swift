@@ -24,7 +24,7 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
     static func getUIColor(_ value: RGB) -> UIColor{
         return UIColor(red: CGFloat(CGFloat(value.0)/255.0), green: CGFloat(CGFloat(value.1)/255.0), blue: CGFloat(CGFloat(value.2)/255.0), alpha: 1.0)
     }
-    
+
     func initColorList() {
         let rbgList = [
             (255,236,127),
@@ -77,11 +77,11 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
             lectures[i].removeLast()
         }
     }
-    
+
     func getTitleFromText(_ text: String) -> String {
         return String(text[..<text.index(of: " ")!])
     }
-    
+
     func getDescriptionFromText(_ text: String) -> String {
         let subString = String(text[text.index(of: "(")!..<text.index(of: ")")!])
 
@@ -101,14 +101,16 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
 
                 // monday(1) to saturday(6), (0) is for period
                 for j in 1...6 {
-                    if let text = try? row.get(j).text(), text.count != 0 {
+                    var lecture: Lecture?
+                    if let text = try? row.get(j).text(),
+                        //let _ = getDescriptionFromText(text).range(of: "미지정"),
+                        text.count != 0 {
                         let title = getTitleFromText(text)
                         let info = getDescriptionFromText(text)
-                        
-                        self.lectures[i-2].append(Lecture(title: title, info: info, code: ""))
-                    } else {
-                        self.lectures[i-2].append(nil)
+
+                        lecture = info.range(of: "미지정") != nil ? nil : Lecture(title: title, info: info, code: "")
                     }
+                    self.lectures[i-2].append(lecture)
                 }
             }
         }
@@ -185,6 +187,7 @@ class TimeTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 bgColor = subColorMap[title]!
             }
 
+            // skip sub title
             if indexPath.row > 1 {
                 if (self.lectures[indexPath.row - 2][i]?.title ?? "") == title {
                     title = ""

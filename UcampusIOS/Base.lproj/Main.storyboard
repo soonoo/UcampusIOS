@@ -744,7 +744,7 @@
                                             <outletCollection property="titleLabels" destination="nJ5-tn-hOm" collectionClass="NSMutableArray" id="hbz-N5-DxM"/>
                                             <outletCollection property="cellViews" destination="KGh-Q9-7nX" collectionClass="NSMutableArray" id="y1j-Xc-RNt"/>
                                             <outletCollection property="descriptionLabels" destination="ocV-X2-yBU" collectionClass="NSMutableArray" id="We6-le-Otn"/>
-                                            <outletCollection property="titleLabels" destination="ocV-X2-yBU" collectionClass="NSMutableArray" id="sJL-4c-qgX"/>
+                                            <outletCollection property="titleLabels" destination="E6t-7t-9RM" collectionClass="NSMutableArray" id="Rvm-f7-EVg"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableHeaderCell" rowHeight="30" id="wb7-x4-nhg" customClass="TableHeaderCell" customModule="UcampusIOS" customModuleProvider="target">

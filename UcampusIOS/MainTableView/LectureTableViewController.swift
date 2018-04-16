@@ -26,8 +26,12 @@ class LectureTableViewController: NSObject, UITableViewDataSource, UITableViewDe
     // triggered on cell click
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        rowSelectionDelegate.notifyMainTableSelection(row: indexPath.row)
 
+        // dismiss if e-learning
+        if lectures[indexPath.row].code == "" { return }
+
+        rowSelectionDelegate.notifyMainTableSelection(row: indexPath.row)
+        
         // prevent cell multitouch
         tableView.isUserInteractionEnabled = false
 
